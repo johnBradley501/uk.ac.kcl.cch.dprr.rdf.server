@@ -1,0 +1,1816 @@
+@prefix map: <#> .
+@prefix db: <> .
+@prefix vocab: <http://romanrepublic.ac.uk/rdf/ontology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d2rq: <http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#> .
+@prefix jdbc: <http://d2rq.org/terms/jdbc/> .
+
+map:database a d2rq:Database;
+	d2rq:jdbcDriver "org.postgresql.Driver";
+	d2rq:jdbcDSN "jdbc:postgresql:app_dprr_lcl";
+	d2rq:username "postgres";
+	d2rq:password "flor45mat";
+	.
+
+# Table promrep_dateinformation
+map:DateInformation a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "DateInformation/@@promrep_dateinformation.id@@";
+	d2rq:class vocab:DateInformation;
+	d2rq:classDefinitionLabel "DateInformation";
+	.
+map:dateInformationLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Date Information: #@@promrep_dateinformation.id@@";
+	.
+map:dateInformationID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "DateInformation id";
+	d2rq:column "promrep_dateinformation.id";
+	d2rq:datatype xsd:integer;
+	.
+map:dateInformationDateInterval a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property vocab:hasDateInterval;
+	d2rq:propertyDefinitionLabel "DateInformation date_interval";
+	d2rq:column "promrep_dateinformation.date_interval";
+	.
+map:dateInformationUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property vocab:isUncertain;
+	d2rq:propertyDefinitionLabel "DateInformation uncertain";
+	d2rq:column "promrep_dateinformation.uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:dateInformationValue a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property vocab:hasValue;
+	d2rq:propertyDefinitionLabel "DateInformation value";
+	d2rq:column "promrep_dateinformation.value";
+	d2rq:datatype xsd:integer;
+	.
+map:dateInformationSourceText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property vocab:hasSourceText;
+	d2rq:propertyDefinitionLabel "DateInformation source_text";
+	d2rq:column "promrep_dateinformation.source_text";
+	.
+map:dateInformationNotes a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property vocab:hasNotes;
+	d2rq:propertyDefinitionLabel "DateInformation notes";
+	d2rq:column "promrep_dateinformation.notes";
+	.
+map:dateInformationDateTypeIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property vocab:hasDateType;
+	d2rq:refersToClassMap map:DateType;
+	d2rq:join "promrep_dateinformation.date_type_id => promrep_datetype.id";
+	.
+map:dateInformationPersonIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property vocab:isAboutPerson;
+	d2rq:refersToClassMap map:Person;
+	d2rq:join "promrep_dateinformation.person_id => promrep_person.id";
+	.
+map:dateInformationSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateInformation;
+	d2rq:property vocab:hasSecondarySource;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_dateinformation.secondary_source_id => promrep_secondarysource.id";
+	.
+
+# Table promrep_datetype
+map:DateType a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "DateType/@@promrep_datetype.id@@";
+	d2rq:class vocab:DateType;
+	d2rq:classDefinitionLabel "DateType";
+	.
+map:dateTypeLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateType;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Date Type: @@promrep_datetype.name@@";
+	.
+map:dateTypeID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateType;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "DateType id";
+	d2rq:column "promrep_datetype.id";
+	d2rq:datatype xsd:integer;
+	.
+map:dateTypeName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateType;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "DateType name";
+	d2rq:column "promrep_datetype.name";
+	.
+map:dateTypeDescription a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:DateType;
+	d2rq:property vocab:hasDescription;
+	d2rq:propertyDefinitionLabel "DateType description";
+	d2rq:column "promrep_datetype.description";
+	.
+
+# Table promrep_gens
+# removed at suggestion of Maggie Robb: email 15-5-2017
+#map:Gens a d2rq:ClassMap;
+#	d2rq:dataStorage map:database;
+#	d2rq:uriPattern "Gens/@@promrep_gens.id@@";
+#	d2rq:class vocab:Gens;
+#	d2rq:classDefinitionLabel "Gens";
+#	.
+#map:gensLabel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Gens;
+#	d2rq:property rdfs:label;
+#	d2rq:pattern "Gens: @@promrep_gens.name@@";
+#	.
+#map:gensID a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Gens;
+#	d2rq:property vocab:hasID;
+#	d2rq:propertyDefinitionLabel "Gens id";
+#	d2rq:column "promrep_gens.id";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:gensName a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Gens;
+#	d2rq:property vocab:hasName;
+#	d2rq:propertyDefinitionLabel "Gens name";
+#	d2rq:column "promrep_gens.name";
+#	.
+#map:gensExtraInfo a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Gens;
+#	d2rq:property vocab:hasExtraInfo;
+#	d2rq:propertyDefinitionLabel "Gens extra_info";
+#	d2rq:column "promrep_gens.extra_info";
+#	.
+
+# Table promrep_gensassertion
+#map:GensAssertion a d2rq:ClassMap;
+#	d2rq:dataStorage map:database;
+#	d2rq:uriPattern "GensAssertion/@@promrep_gensassertion.id@@";
+#	d2rq:class vocab:GensAssertion;
+#	d2rq:classDefinitionLabel "GensAssertion";
+#	.
+#map:gensAssertionLabel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:GensAssertion;
+#	d2rq:property rdfs:label;
+#	d2rq:pattern "Gens Assertion: #@@promrep_gensassertion.id@@";
+#	.
+#map:gensAssertionID a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:GensAssertion;
+#	d2rq:property vocab:hasID;
+#	d2rq:propertyDefinitionLabel "GensAssertion id";
+#	d2rq:column "promrep_gensassertion.id";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:gensAssertionUncertain a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:GensAssertion;
+#	d2rq:property vocab:isUncertain;
+#	d2rq:propertyDefinitionLabel "GensAssertion uncertain";
+#	d2rq:column "promrep_gensassertion.uncertain";
+#	d2rq:valueRegex "^[01]*$";
+#	.
+#map:gensAssertionNotes a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:GensAssertion;
+#	d2rq:property vocab:hasNotes;
+#	d2rq:propertyDefinitionLabel "GensAssertion notes";
+#	d2rq:column "promrep_gensassertion.notes";
+#	.
+#map:gensAssertionSecondarySourceIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:GensAssertion;
+#	d2rq:property vocab:hasSecondarySource;
+#	d2rq:refersToClassMap map:SecondarySource;
+#	d2rq:join "promrep_gensassertion.secondary_source_id => promrep_secondarysource.id";
+#	.
+#map:gensAssertionPersonIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:GensAssertion;
+#	d2rq:property vocab:hasPerson;
+#	d2rq:refersToClassMap map:Person;
+#	d2rq:join "promrep_gensassertion.person_id => promrep_person.id";
+#	.
+
+# Table promrep_group: removed in DB dated Apr 2017
+# map:Group a d2rq:ClassMap;
+#	d2rq:dataStorage map:database;
+#	d2rq:uriPattern "Group/@@promrep_group.id@@";
+#	d2rq:class vocab:Group;
+#	d2rq:classDefinitionLabel "Group";
+#	.
+#map:groupLabel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Group;
+#	d2rq:property rdfs:label;
+#	d2rq:pattern "Group: #@@promrep_group.id@@";
+#	.
+#map:groupID a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Group;
+#	d2rq:property vocab:hasID;
+#	d2rq:propertyDefinitionLabel "Group id";
+#	d2rq:column "promrep_group.id";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:groupDisplayText a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Group;
+#	d2rq:property vocab:hasDisplayText;
+#	d2rq:propertyDefinitionLabel "Group display_text";
+#	d2rq:column "promrep_group.display_text";
+#	.
+#map:groupNotes a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Group;
+#	d2rq:property vocab:hasNotes;
+#	d2rq:propertyDefinitionLabel "Group notes";
+#	d2rq:column "promrep_group.notes";
+#	.
+#map:groupDateYear a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Group;
+#	d2rq:property vocab:hasDateYear;
+#	d2rq:propertyDefinitionLabel "Group date_year";
+#	d2rq:column "promrep_group.date_year";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:groupDateInfo a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Group;
+#	d2rq:property vocab:hasDateInfo;
+#	d2rq:propertyDefinitionLabel "Group date_info";
+#	d2rq:column "promrep_group.date_info";
+#	.
+
+# Table promrep_notetype
+map:NoteType a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "NoteType/@@promrep_notetype.id@@";
+	d2rq:class vocab:NoteType;
+	d2rq:classDefinitionLabel "NoteType";
+	.
+map:noteTypeLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:NoteType;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Note Type: @@promrep_notetype.name@@";
+	.
+map:noteTypeID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:NoteType;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "NoteType id";
+	d2rq:column "promrep_notetype.id";
+	d2rq:datatype xsd:integer;
+	.
+map:noteTypeName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:NoteType;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "NoteType name";
+	d2rq:column "promrep_notetype.name";
+	.
+map:noteTypeDescription a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:NoteType;
+	d2rq:property vocab:hasDescription;
+	d2rq:propertyDefinitionLabel "NoteType description";
+	d2rq:column "promrep_notetype.description";
+	.
+
+# Table promrep_office
+map:Office a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "Office/@@promrep_office.id@@";
+	d2rq:class vocab:Office;
+	d2rq:classDefinitionLabel "Office";
+	.
+map:officeLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Office;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Office: @@promrep_office.name@@";
+	.
+map:officeName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Office;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "Office name";
+	d2rq:column "promrep_office.name";
+	.
+map:officeDescription a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Office;
+	d2rq:property vocab:hasDescription;
+	d2rq:propertyDefinitionLabel "Office description";
+	d2rq:column "promrep_office.description";
+	.
+#map:officeLft a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Office;
+#	d2rq:property vocab:hasLft;
+#	d2rq:propertyDefinitionLabel "Office lft";
+#	d2rq:column "promrep_office.lft";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:officeRght a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Office;
+#	d2rq:property vocab:hasRght;
+#	d2rq:propertyDefinitionLabel "Office rght";
+#	d2rq:column "promrep_office.rght";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:officeTreeID a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Office;
+#	d2rq:property vocab:hasTree;
+#	d2rq:propertyDefinitionLabel "Office tree_id";
+#	d2rq:column "promrep_office.tree_id";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:officeLevel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Office;
+#	d2rq:property vocab:hasLevel;
+#	d2rq:propertyDefinitionLabel "Office level";
+#	d2rq:column "promrep_office.level";
+#	d2rq:datatype xsd:integer;
+#	.
+map:officeAbbrevName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Office;
+	d2rq:property vocab:hasAbbreviation;
+	d2rq:propertyDefinitionLabel "Office abbreviated name";
+	d2rq:column "promrep_office.abbrev_name";
+	.
+map:officeParentIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Office;
+	d2rq:property vocab:hasParent;
+	d2rq:refersToClassMap map:Office;
+	d2rq:alias "promrep_office AS promrep_office__alias";
+	d2rq:join "promrep_office.parent_id => promrep_office__alias.id";
+	.
+
+# Table promrep_person
+map:Person a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "Person/@@promrep_person.id@@";
+	d2rq:class vocab:Person;
+	d2rq:classDefinitionLabel "Person";
+	.
+map:personLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Person: #@@promrep_person.id@@";
+	.
+#map:personLabel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Person;
+#	d2rq:property vocab:hasName;
+#	d2rq:pattern "Person: #@@promrep_person.id@@";
+#	.
+map:associatedURL a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasAssociatedWebpage;
+	d2rq:propertyDefinitionLabel "associated Webpage for Person";
+        d2rq:uriPattern "http://www.romanrepublic.ac.uk/person/@@promrep_person.id@@";
+	.
+map:personID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "Person id";
+	d2rq:column "promrep_person.id";
+	d2rq:datatype xsd:integer;
+	.
+map:personPraenomenUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isPraenomenUncertain;
+	d2rq:propertyDefinitionLabel "Person praenomen_uncertain";
+	d2rq:column "promrep_person.praenomen_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personNomen a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasNomen;
+	d2rq:propertyDefinitionLabel "Person nomen";
+	d2rq:column "promrep_person.nomen";
+	.
+map:personNomenUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isNomenUncertain;
+	d2rq:propertyDefinitionLabel "Person nomen_uncertain";
+	d2rq:column "promrep_person.nomen_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personCognomen a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasCognomen;
+	d2rq:propertyDefinitionLabel "Person cognomen";
+	d2rq:column "promrep_person.cognomen";
+	.
+map:personCognomenUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isCognomenUncertain;
+	d2rq:propertyDefinitionLabel "Person cognomen_uncertain";
+	d2rq:column "promrep_person.cognomen_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personOtherNames a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasOtherNames;
+	d2rq:propertyDefinitionLabel "Person other_names";
+	d2rq:column "promrep_person.other_names";
+	d2rq:condition "promrep_person.other_names <> ''";
+	.
+map:personFiliation a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasFiliation;
+	d2rq:propertyDefinitionLabel "Person filiation";
+	d2rq:column "promrep_person.filiation";
+	.
+map:personFiliationUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isFiliationUncertain;
+	d2rq:propertyDefinitionLabel "Person filiation_uncertain";
+	d2rq:column "promrep_person.filiation_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personReNumber a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasReNumber;
+	d2rq:propertyDefinitionLabel "Person re_number";
+	d2rq:column "promrep_person.re_number";
+	.
+map:personReNumberOld a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasReNumberOld;
+	d2rq:propertyDefinitionLabel "Person re_number_old";
+	d2rq:column "promrep_person.re_number_old";
+	.
+map:personPatrician a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isPatrician;
+	d2rq:propertyDefinitionLabel "Person patrician";
+	d2rq:column "promrep_person.patrician";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personPatricianUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isPatricianUncertain;
+	d2rq:propertyDefinitionLabel "Person patrician_uncertain";
+	d2rq:column "promrep_person.patrician_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personPatricianNotes a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasPatricianNotes;
+	d2rq:propertyDefinitionLabel "Person patrician_notes";
+	d2rq:column "promrep_person.patrician_notes";
+	.
+map:personNovus a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isNovus;
+	d2rq:propertyDefinitionLabel "Person novus";
+	d2rq:column "promrep_person.novus";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personNovusUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isNovusUncertain;
+	d2rq:propertyDefinitionLabel "Person novus_uncertain";
+	d2rq:column "promrep_person.novus_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personNovusNotes a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasNovusNotes;
+	d2rq:propertyDefinitionLabel "Person novus_notes";
+	d2rq:column "promrep_person.novus_notes";
+	.
+map:personHighestOffice a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasHighestOffice;
+	d2rq:propertyDefinitionLabel "Person Highest Office";
+	d2rq:column "promrep_person.highest_office";
+	.
+map:personDprrID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasDprrID;
+	d2rq:propertyDefinitionLabel "Person DPRR ID";
+	d2rq:column "promrep_person.dprr_id";
+	.
+#map:personEques a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Person;
+#	d2rq:property vocab:isEques;
+#	d2rq:propertyDefinitionLabel "Person eques";
+#	d2rq:column "promrep_person.eques";
+#	d2rq:valueRegex "^[01]*$";
+#	.
+#map:personEquesUncertain a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Person;
+#	d2rq:property vocab:isEquesUncertain;
+#	d2rq:propertyDefinitionLabel "Person eques_uncertain";
+#	d2rq:column "promrep_person.eques_uncertain";
+#	d2rq:valueRegex "^[01]*$";
+#	.
+#map:personEquesNotes a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Person;
+#	d2rq:property vocab:hasEquesNotes;
+#	d2rq:propertyDefinitionLabel "Person eques_notes";
+#	d2rq:column "promrep_person.eques_notes";
+#	.
+map:personNobilis a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isNobilis;
+	d2rq:propertyDefinitionLabel "Person nobilis";
+	d2rq:column "promrep_person.nobilis";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personNobilisUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isNobilisUncertain;
+	d2rq:propertyDefinitionLabel "Person nobilis_uncertain";
+	d2rq:column "promrep_person.nobilis_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:personNobilisNotes a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasNobilisNotes;
+	d2rq:propertyDefinitionLabel "Person nobilis_notes";
+	d2rq:column "promrep_person.nobilis_notes";
+	.
+map:personExtraInfo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasExtraInfo;
+	d2rq:propertyDefinitionLabel "Person extra_info";
+	d2rq:column "promrep_person.extra_info";
+	.
+map:personDateDisplayText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasEraDisplayText;
+	d2rq:propertyDefinitionLabel "Person era display text";
+	d2rq:column "promrep_person.date_display_text";
+	.
+map:personEraFrom a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasEraFrom;
+	d2rq:propertyDefinitionLabel "Person era_from";
+	d2rq:column "promrep_person.era_from";
+	d2rq:datatype xsd:integer;
+	.
+map:personEraTo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasEraTo;
+	d2rq:propertyDefinitionLabel "Person era_to";
+	d2rq:column "promrep_person.era_to";
+	d2rq:datatype xsd:integer;
+	.
+#map:personReviewFlag a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Person;
+#	d2rq:property vocab:isReviewFlag;
+#	d2rq:propertyDefinitionLabel "Person review_flag";
+#	d2rq:column "promrep_person.review_flag";
+#	d2rq:valueRegex "^[01]*$";
+#	.
+map:personOtherNamesUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isOtherNamesUncertain;
+	d2rq:propertyDefinitionLabel "Person other_names_uncertain";
+	d2rq:column "promrep_person.other_names_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+#map:personReviewNotes a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:Person;
+#	d2rq:property vocab:hasReviewNotes;
+#	d2rq:propertyDefinitionLabel "Person review_notes";
+#	d2rq:column "promrep_person.review_notes";
+#	.
+map:personOrigin a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasOrigin;
+	d2rq:propertyDefinitionLabel "Person origin";
+	d2rq:column "promrep_person.origin";
+	.
+map:personPraenomenIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasPraenomen;
+	d2rq:refersToClassMap map:Praenomen;
+	d2rq:join "promrep_person.praenomen_id => promrep_praenomen.id";
+	.
+map:personSexIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:isSex;
+	d2rq:refersToClassMap map:Sex;
+	d2rq:join "promrep_person.sex_id => promrep_sex.id";
+	.
+map:personAltPraenomenIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasAltPraenomen;
+	d2rq:refersToClassMap map:Praenomen;
+	d2rq:join "promrep_person.alt_praenomen_id => promrep_praenomen.id";
+	.
+
+map:personHasNote a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Person;
+	d2rq:property vocab:hasPersonNote;
+	d2rq:refersToClassMap map:PersonNote;
+	d2rq:join "promrep_person.id <= promrep_person_notes.person_id";
+	d2rq:join "promrep_person_notes.personnote_id => promrep_personnote.id";
+	.
+
+# Table promrep_person_notes
+#map:PersonNotes a d2rq:ClassMap;
+#	d2rq:dataStorage map:database;
+#	d2rq:uriPattern "PersonNotes/@@promrep_person_notes.id@@";
+#	d2rq:class vocab:PersonNotes;
+#	d2rq:classDefinitionLabel "PersonNotes";
+#	.
+#map:personNotesLabel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PersonNotes;
+#	d2rq:property rdfs:label;
+#	d2rq:pattern "Person Notes: #@@promrep_person_notes.id@@";
+#	.
+#map:personNotesID a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PersonNotes;
+#	d2rq:property vocab:hasID;
+#	d2rq:propertyDefinitionLabel "PersonNotes id";
+#	d2rq:column "promrep_person_notes.id";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:personNotesPersonnoteIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PersonNotes;
+#	d2rq:property vocab:hasPersonnote;
+#	d2rq:refersToClassMap map:PersonNote;
+#	d2rq:join "promrep_person_notes.personnote_id => promrep_personnote.id";
+#	.
+#map:personNotesPersonIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PersonNotes;
+#	d2rq:property vocab:hasPerson;
+#	d2rq:refersToClassMap map:Person;
+#	d2rq:join "promrep_person_notes.person_id => promrep_person.id";
+#	.
+
+# Table promrep_personnote
+map:PersonNote a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "PersonNote/@@promrep_personnote.id@@";
+	d2rq:class vocab:PersonNote;
+	d2rq:classDefinitionLabel "PersonNote";
+	.
+map:personNoteLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PersonNote;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Person Note: #@@promrep_personnote.id@@";
+	.
+map:personNoteID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PersonNote;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "PersonNote id";
+	d2rq:column "promrep_personnote.id";
+	d2rq:datatype xsd:integer;
+	.
+map:personNoteText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PersonNote;
+	d2rq:property vocab:hasNoteText;
+	d2rq:propertyDefinitionLabel "PersonNote text";
+	d2rq:column "promrep_personnote.text";
+	.
+map:personNoteExtraInfo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PersonNote;
+	d2rq:property vocab:hasExtraInfo;
+	d2rq:propertyDefinitionLabel "PersonNote extra_info";
+	d2rq:column "promrep_personnote.extra_info";
+	.
+map:personNoteNoteTypeIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PersonNote;
+	d2rq:property vocab:hasNoteType;
+	d2rq:refersToClassMap map:NoteType;
+	d2rq:join "promrep_personnote.note_type_id => promrep_notetype.id";
+	.
+map:personNoteSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PersonNote;
+	d2rq:property vocab:hasSecondarySourceForNote;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_personnote.secondary_source_id => promrep_secondarysource.id";
+	.
+
+# Table promrep_postassertion
+map:PostAssertion a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "PostAssertion/@@promrep_postassertion.id@@";
+	d2rq:class vocab:PostAssertion;
+	d2rq:classDefinitionLabel "PostAssertion";
+	.
+map:postAssertionLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Post Assertion: #@@promrep_postassertion.id@@";
+	.
+map:postAssertionID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "PostAssertion id";
+	d2rq:column "promrep_postassertion.id";
+	d2rq:datatype xsd:integer;
+	.
+map:postAssertionOriginalText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasOriginalText;
+	d2rq:propertyDefinitionLabel "PostAssertion original_text";
+	d2rq:column "promrep_postassertion.original_text";
+	.
+map:postAssertionOfficeXref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasOfficeXref;
+	d2rq:propertyDefinitionLabel "PostAssertion office_xref";
+	d2rq:column "promrep_postassertion.office_xref";
+	.
+map:postAssertionUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:isUncertain;
+	d2rq:propertyDefinitionLabel "PostAssertion uncertain";
+	d2rq:column "promrep_postassertion.uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:postAssertionPosition a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasPosition;
+	d2rq:propertyDefinitionLabel "PostAssertion position";
+	d2rq:column "promrep_postassertion.position";
+	d2rq:datatype xsd:integer;
+	.
+map:postAssertionDateStart a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasDateStart;
+	d2rq:propertyDefinitionLabel "PostAssertion date_start";
+	d2rq:column "promrep_postassertion.date_start";
+	d2rq:datatype xsd:integer;
+	.
+map:postAssertionDateStartUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:isDateStartUncertain;
+	d2rq:propertyDefinitionLabel "PostAssertion date_start_uncertain";
+	d2rq:column "promrep_postassertion.date_start_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:postAssertionDateEnd a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasDateEnd;
+	d2rq:propertyDefinitionLabel "PostAssertion date_end";
+	d2rq:column "promrep_postassertion.date_end";
+	d2rq:datatype xsd:integer;
+	.
+map:postAssertionDateEndUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:isDateEndUncertain;
+	d2rq:propertyDefinitionLabel "PostAssertion date_end_uncertain";
+	d2rq:column "promrep_postassertion.date_end_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:postAssertionDateDisplayText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasDateDisplayText;
+	d2rq:propertyDefinitionLabel "PostAssertion date_display_text";
+	d2rq:column "promrep_postassertion.date_display_text";
+	.
+map:postAssertionDateSourceText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasDateSourceText;
+	d2rq:propertyDefinitionLabel "PostAssertion date_source_text";
+	d2rq:column "promrep_postassertion.date_source_text";
+	.
+#map:postAssertionReviewFlag a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PostAssertion;
+#	d2rq:property vocab:isReviewFlag;
+#	d2rq:propertyDefinitionLabel "PostAssertion review_flag";
+#	d2rq:column "promrep_postassertion.review_flag";
+#	d2rq:valueRegex "^[01]*$";
+#	.
+map:postAssertionProvinceOriginalExpanded a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasProvinceOriginalExpanded;
+	d2rq:propertyDefinitionLabel "PostAssertion province_original_expanded";
+	d2rq:column "promrep_postassertion.province_original_expanded";
+	.
+map:postAssertionProvinceOriginal a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasProvinceOriginal;
+	d2rq:propertyDefinitionLabel "PostAssertion province_original";
+	d2rq:column "promrep_postassertion.province_original";
+	.
+map:postAssertionDateSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasDateSecondarySource;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_postassertion.date_secondary_source_id => promrep_secondarysource.id";
+	.
+map:postAssertionPersonIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:isAboutPerson;
+	d2rq:refersToClassMap map:Person;
+	d2rq:join "promrep_postassertion.person_id => promrep_person.id";
+	.
+map:postAssertionOfficeIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasOffice;
+	d2rq:refersToClassMap map:Office;
+	d2rq:join "promrep_postassertion.office_id => promrep_office.id";
+	.
+#map:postAssertionRoleIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PostAssertion;
+#	d2rq:property vocab:hasRole;
+#	d2rq:refersToClassMap map:RoleType;
+#	d2rq:join "promrep_postassertion.role_id => promrep_roletype.id";
+#	.
+map:postAssertionSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasSecondarySource;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_postassertion.secondary_source_id => promrep_secondarysource.id";
+	.
+#map:postAssertionGroupIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PostAssertion;
+#	d2rq:property vocab:hasGroup;
+#	d2rq:refersToClassMap map:Group;
+#	d2rq:join "promrep_postassertion.group_id => promrep_group.id";
+#	.
+
+#replaces intersectionset map:PostAssertionNotes and associated property bridges  jb
+
+map:postAssertionHasNote a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertion;
+	d2rq:property vocab:hasPostAssertionNote;
+	d2rq:refersToClassMap map:PostAssertionNote;
+	d2rq:join "promrep_postassertion.id <= promrep_postassertion_notes.postassertion_id";
+	d2rq:join "promrep_postassertion_notes.postassertionnote_id => promrep_postassertionnote.id";
+	.
+
+# Table promrep_postassertion_notes
+#map:PostAssertionNotes a d2rq:ClassMap;
+#	d2rq:dataStorage map:database;
+#	d2rq:uriPattern "PostAssertionNotes/@@promrep_postassertion_notes.id@@";
+#	d2rq:class vocab:PostAssertionNotes;
+#	d2rq:classDefinitionLabel "PostAssertionNotes";
+#	.
+#map:postAssertionNotesLabel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PostAssertionNotes;
+#	d2rq:property rdfs:label;
+#	d2rq:pattern "Post Assertion Notes: #@@promrep_postassertion_notes.id@@";
+#	.
+#map:postAssertionNotesID a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PostAssertionNotes;
+#	d2rq:property vocab:hasID;
+#	d2rq:propertyDefinitionLabel "PostAssertionNotes id";
+#	d2rq:column "promrep_postassertion_notes.id";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:postAssertionNotesPostassertionIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PostAssertionNotes;
+#	d2rq:property vocab:hasPostassertion;
+#	d2rq:refersToClassMap map:PostAssertion;
+#	d2rq:join "promrep_postassertion_notes.postassertion_id => promrep_postassertion.id";
+#	.
+#map:postAssertionNotesPostassertionnoteIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:PostAssertionNotes;
+#	d2rq:property vocab:hasPostassertionnote;
+#	d2rq:refersToClassMap map:PostAssertionNote;
+#	d2rq:join "promrep_postassertion_notes.postassertionnote_id => promrep_postassertionnote.id";
+#	.
+
+# Table promrep_postassertionnote
+map:PostAssertionNote a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "PostAssertionNote/@@promrep_postassertionnote.id@@";
+	d2rq:class vocab:PostAssertionNote;
+	d2rq:classDefinitionLabel "PostAssertionNote";
+	.
+map:postAssertionNoteLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionNote;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Post Assertion Note: #@@promrep_postassertionnote.id@@";
+	.
+map:postAssertionNoteID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionNote;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "PostAssertionNote id";
+	d2rq:column "promrep_postassertionnote.id";
+	d2rq:datatype xsd:integer;
+	.
+map:postAssertionNoteText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionNote;
+	d2rq:property vocab:hasNoteText;
+	d2rq:propertyDefinitionLabel "PostAssertionNote text";
+	d2rq:column "promrep_postassertionnote.text";
+	.
+map:postAssertionNoteExtraInfo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionNote;
+	d2rq:property vocab:hasExtraInfo;
+	d2rq:propertyDefinitionLabel "PostAssertionNote extra_info";
+	d2rq:column "promrep_postassertionnote.extra_info";
+	.
+map:postAssertionNoteNoteTypeIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionNote;
+	d2rq:property vocab:hasNoteType;
+	d2rq:refersToClassMap map:NoteType;
+	d2rq:join "promrep_postassertionnote.note_type_id => promrep_notetype.id";
+	.
+map:postAssertionNoteSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionNote;
+	d2rq:property vocab:hasSecondarySourceForNote;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_postassertionnote.secondary_source_id => promrep_secondarysource.id";
+	.
+
+# Table promrep_postassertionprovince
+map:PostAssertionProvince a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "PostAssertionProvince/@@promrep_postassertionprovince.id@@";
+	d2rq:class vocab:PostAssertionProvince;
+	d2rq:classDefinitionLabel "PostAssertionProvince";
+	.
+map:postAssertionProvinceLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionProvince;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Post Assertion Province: #@@promrep_postassertionprovince.id@@";
+	.
+map:postAssertionProvinceID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionProvince;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "PostAssertionProvince id";
+	d2rq:column "promrep_postassertionprovince.id";
+	d2rq:datatype xsd:integer;
+	.
+map:postAssertionProvinceUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionProvince;
+	d2rq:property vocab:isProvinceUncertain;
+	d2rq:propertyDefinitionLabel "PostAssertionProvince uncertain";
+	d2rq:column "promrep_postassertionprovince.uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:postAssertionProvinceNote a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionProvince;
+	d2rq:property vocab:hasNoteText;
+	d2rq:propertyDefinitionLabel "PostAssertionProvince note";
+	d2rq:column "promrep_postassertionprovince.note";
+	.
+map:postAssertionProvinceProvinceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionProvince;
+	d2rq:property vocab:hasProvince;
+	d2rq:refersToClassMap map:Province;
+	d2rq:join "promrep_postassertionprovince.province_id => promrep_province.id";
+	.
+map:postAssertionProvincePostAssertionIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PostAssertionProvince;
+	d2rq:property vocab:hasPostAssertion;
+	d2rq:refersToClassMap map:PostAssertion;
+	d2rq:join "promrep_postassertionprovince.post_assertion_id => promrep_postassertion.id";
+	.
+
+# Table promrep_praenomen
+map:Praenomen a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "Praenomen/@@promrep_praenomen.name@@";
+	d2rq:class vocab:Praenomen;
+	d2rq:classDefinitionLabel "Praenomen";
+	.
+map:praenomenLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Praenomen;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Praenomen: @@promrep_praenomen.abbrev@@";
+	.
+map:praenomenID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Praenomen;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "Praenomen id";
+	d2rq:column "promrep_praenomen.id";
+	d2rq:datatype xsd:integer;
+	.
+map:praenomenAbbrev a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Praenomen;
+	d2rq:property vocab:Abbreviation;
+	d2rq:propertyDefinitionLabel "Praenomen abbreviation";
+	d2rq:column "promrep_praenomen.abbrev";
+	.
+map:praenomenName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Praenomen;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "Praenomen name";
+	d2rq:column "promrep_praenomen.name";
+	.
+
+# Table promrep_primarysource
+map:PrimarySource a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "PrimarySource/@@promrep_primarysource.id@@";
+	d2rq:class vocab:PrimarySource;
+	d2rq:classDefinitionLabel "PrimarySource";
+	.
+map:primarySourceLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySource;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Primary Source: @@promrep_primarysource.abbrev_name@@";
+	.
+map:primarySourceID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySource;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "PrimarySource id";
+	d2rq:column "promrep_primarysource.id";
+	d2rq:datatype xsd:integer;
+	.
+map:primarySourceName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySource;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "PrimarySource name";
+	d2rq:column "promrep_primarysource.name";
+	.
+map:primarySourceAbbrevName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySource;
+	d2rq:property vocab:hasAbbreviation;
+	d2rq:propertyDefinitionLabel "PrimarySource abbreviated name";
+	d2rq:column "promrep_primarysource.abbrev_name";
+	.
+map:primarySourceBiblio a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySource;
+	d2rq:property vocab:hasBiblio;
+	d2rq:propertyDefinitionLabel "PrimarySource biblio";
+	d2rq:column "promrep_primarysource.biblio";
+	.
+
+# Table promrep_primarysourcereference
+map:PrimarySourceReference a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "PrimarySourceReference/@@promrep_primarysourcereference.id@@";
+	d2rq:class vocab:PrimarySourceReference;
+	d2rq:classDefinitionLabel "PrimarySourceReference";
+	.
+map:primarySourceReferenceLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySourceReference;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Primary Source Reference: #@@promrep_primarysourcereference.id@@";
+	.
+map:primarySourceReferenceID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySourceReference;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "PrimarySourceReference id";
+	d2rq:column "promrep_primarysourcereference.id";
+	d2rq:datatype xsd:integer;
+	.
+map:primarySourceReferenceText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySourceReference;
+	d2rq:property vocab:hasNoteText;
+	d2rq:propertyDefinitionLabel "PrimarySourceReference text";
+	d2rq:column "promrep_primarysourcereference.text";
+	.
+# primary_source_id in theory might point to more than one table, but
+# in fact only points to promrep_postassertion  (jb) 
+map:primarySourceReferenceObjectID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySourceReference;
+	d2rq:property vocab:forAssertion;
+	d2rq:propertyDefinitionLabel "PrimarySourceReference postAssertion_id";
+#	d2rq:column "promrep_primarysourcereference.object_id";
+#	d2rq:datatype xsd:integer;
+	d2rq:refersToClassMap map:PostAssertion;
+	d2rq:join "promrep_primarysourcereference.object_id => promrep_postassertion.id";
+	.
+map:primarySourceReferencePrimarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:PrimarySourceReference;
+	d2rq:property vocab:hasPrimarySource;
+	d2rq:refersToClassMap map:PrimarySource;
+	d2rq:join "promrep_primarysourcereference.primary_source_id => promrep_primarysource.id";
+	.
+
+# Table promrep_province
+map:Province a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "Province/@@promrep_province.id@@";
+	d2rq:class vocab:Province;
+	d2rq:classDefinitionLabel "Province";
+	.
+map:provinceLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Province;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Province: @@promrep_province.name@@";
+	.
+map:provinceID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Province;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "Province id";
+	d2rq:column "promrep_province.id";
+	d2rq:datatype xsd:integer;
+	.
+map:provinceName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Province;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "Province name";
+	d2rq:column "promrep_province.name";
+	.
+map:provinceDescription a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Province;
+	d2rq:property vocab:hasDescription;
+	d2rq:propertyDefinitionLabel "Province description";
+	d2rq:column "promrep_province.description";
+	.
+map:provinceParent a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Province;
+	d2rq:property vocab:hasParent;
+	d2rq:propertyDefinitionLabel "Province Parent";
+	d2rq:refersToClassMap map:Province;
+	d2rq:alias "promrep_province AS promrep_province__alias";
+	d2rq:join "promrep_province.parent_id => promrep_province__alias.id";
+	.
+
+
+# Table promrep_relationshipassertion
+map:RelationshipAssertion a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "RelationshipAssertion/@@promrep_relationshipassertion.id@@";
+	d2rq:class vocab:RelationshipAssertion;
+	d2rq:classDefinitionLabel "RelationshipAssertion";
+	.
+map:relationshipAssertionLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Relationship Assertion: #@@promrep_relationshipassertion.id@@";
+	.
+map:relationshipAssertionRelationshipNumber a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:hasRelationshipNumber;
+	d2rq:propertyDefinitionLabel "RelationshipAssertion relationship_number";
+	d2rq:column "promrep_relationshipassertion.relationship_number";
+	d2rq:datatype xsd:integer;
+	.
+map:relationshipAssertionUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:isUncertain;
+	d2rq:propertyDefinitionLabel "RelationshipAssertion uncertain";
+	d2rq:column "promrep_relationshipassertion.uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:relationshipAssertionOriginalText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:hasOriginalText;
+	d2rq:propertyDefinitionLabel "RelationshipAssertion original_text";
+	d2rq:column "promrep_relationshipassertion.original_text";
+	.
+map:relationshipAssertionExtraInfo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:hasExtraInfo;
+	d2rq:propertyDefinitionLabel "RelationshipAssertion extra_info";
+	d2rq:column "promrep_relationshipassertion.extra_info";
+	.
+#map:relationshipAssertionReviewFlag a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:RelationshipAssertion;
+#	d2rq:property vocab:;
+#	d2rq:propertyDefinitionLabel "RelationshipAssertion review_flag";
+#	d2rq:column "promrep_relationshipassertion.review_flag";
+#	d2rq:valueRegex "^[01]*$";
+#	.
+map:relationshipAssertionRelatedPersonIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:hasRelatedPerson;
+	d2rq:refersToClassMap map:Person;
+	d2rq:join "promrep_relationshipassertion.related_person_id => promrep_person.id";
+	.
+map:relationshipAssertionInverseRelationshipIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:hasAssertedRelationshipInverse;
+	d2rq:refersToClassMap map:RelationshipAssertion;
+	d2rq:alias "promrep_relationshipassertion AS promrep_relationshipassertion__alias";
+	d2rq:join "promrep_relationshipassertion.inverse_relationship_id => promrep_relationshipassertion__alias.id";
+	.
+map:relationshipAssertionPersonIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:isAboutPerson;
+	d2rq:refersToClassMap map:Person;
+	d2rq:join "promrep_relationshipassertion.person_id => promrep_person.id";
+	.
+map:relationshipAssertionRelatedRelationshipIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:hasRelatedRelationship;
+	d2rq:refersToClassMap map:RelationshipAssertion;
+	d2rq:alias "promrep_relationshipassertion AS promrep_relationshipassertion__alias";
+	d2rq:join "promrep_relationshipassertion.related_relationship_id => promrep_relationshipassertion__alias.id";
+	.
+map:relationshipAssertionSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:hasSecondarySource;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_relationshipassertion.secondary_source_id => promrep_secondarysource.id";
+	.
+map:relationshipAssertionRelationshipIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:hasRelationship;
+	d2rq:refersToClassMap map:RelationshipType;
+	d2rq:join "promrep_relationshipassertion.relationship_id => promrep_relationshiptype.id";
+	.
+
+# the following replaces need to separate intersection set table promrep_relationshipassertion_references
+
+map:relationAssertionHasReference a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertion;
+	d2rq:property vocab:hasRelationshipReference;
+	d2rq:refersToClassMap map:RelationshipAssertionReference;
+	d2rq:join "promrep_relationshipassertion.id <= promrep_relationshipassertion_references.relationshipassertion_id";
+	d2rq:join "promrep_relationshipassertion_references.relationshipassertionreference_id => promrep_relationshipassertionreference.id";
+.
+
+# Table promrep_relationshipassertion_references
+#map:RelationshipAssertionReferences a d2rq:ClassMap;
+#	d2rq:dataStorage map:database;
+#	d2rq:uriPattern "RelationshipAssertion_references/@@promrep_relationshipassertion_references.id@@";
+#	d2rq:class vocab:RelationshipAssertionReferences;
+#	d2rq:classDefinitionLabel "RelationshipAssertion_references";
+#	.
+#map:relationshipAssertionReferencesLabel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:RelationshipAssertionReferences;
+#	d2rq:property rdfs:label;
+#	d2rq:pattern "Relationship Assertion References: #@@promrep_relationshipassertion_references.id@@";
+#	.
+#map:relationshipAssertionReferencesID a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:RelationshipAssertionReferences;
+#	d2rq:property vocab:hasID;
+#	d2rq:propertyDefinitionLabel "RelationshipAssertion_references id";
+#	d2rq:column "promrep_relationshipassertion_references.id";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:relationshipAssertionReferencesRelationshipassertionreferenceIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:RelationshipAssertionReferences;
+#	d2rq:property vocab:hasRelationshipassertionreference;
+#	d2rq:refersToClassMap map:RelationshipAssertionReference;
+#	d2rq:join "promrep_relationshipassertion_references.relationshipassertionreference_id => promrep_relationshipassertionreference.id";
+#	.
+#map:relationshipAssertionReferencesRelationshipassertionIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:RelationshipAssertionReferences;
+#	d2rq:property vocab:hasRelationshipassertion;
+#	d2rq:refersToClassMap map:RelationshipAssertion;
+#	d2rq:join "promrep_relationshipassertion_references.relationshipassertion_id => promrep_relationshipassertion.id";
+#	.
+
+# Table promrep_relationshipassertionreference
+map:RelationshipAssertionReference a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "RelationshipAssertionReference/@@promrep_relationshipassertionreference.id@@";
+	d2rq:class vocab:RelationshipAssertionReference;
+	d2rq:classDefinitionLabel "RelationshipAssertionReference";
+	.
+map:relationshipAssertionReferenceLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertionReference;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Relationship Assertion Reference: #@@promrep_relationshipassertionreference.id@@";
+	.
+map:relationshipAssertionReferenceID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertionReference;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "RelationshipAssertionReference id";
+	d2rq:column "promrep_relationshipassertionreference.id";
+	d2rq:datatype xsd:integer;
+	.
+map:relationshipAssertionReferenceText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertionReference;
+	d2rq:property vocab:hasNoteText;
+	d2rq:propertyDefinitionLabel "RelationshipAssertionReference text";
+	d2rq:column "promrep_relationshipassertionreference.text";
+	.
+map:relationshipAssertionReferenceExtraInfo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertionReference;
+	d2rq:property vocab:hasExtraInfo;
+	d2rq:propertyDefinitionLabel "RelationshipAssertionReference extra_info";
+	d2rq:column "promrep_relationshipassertionreference.extra_info";
+	.
+map:relationshipAssertionReferenceNoteTypeIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertionReference;
+	d2rq:property vocab:hasNoteType;
+	d2rq:refersToClassMap map:NoteType;
+	d2rq:join "promrep_relationshipassertionreference.note_type_id => promrep_notetype.id";
+	.
+map:relationshipAssertionReferenceSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipAssertionReference;
+	d2rq:property vocab:hasSecondarySourceForNote;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_relationshipassertionreference.secondary_source_id => promrep_secondarysource.id";
+	.
+
+# Table promrep_relationshiptype
+map:RelationshipType a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "Relationship/@@promrep_relationshiptype.id@@";
+	d2rq:class vocab:Relationship;
+	d2rq:classDefinitionLabel "RelationshipType";
+	.
+map:relationshipTypeLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipType;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Relationship: @@promrep_relationshiptype.name@@";
+	.
+map:relationshipTypeID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipType;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "RelationshipType id";
+	d2rq:column "promrep_relationshiptype.id";
+	d2rq:datatype xsd:integer;
+	.
+map:relationshipTypeName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipType;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "Relationship name";
+	d2rq:column "promrep_relationshiptype.name";
+	.
+map:relationshipTypeDescription a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipType;
+	d2rq:property vocab:hasDescription;
+	d2rq:propertyDefinitionLabel "Relationship description";
+	d2rq:column "promrep_relationshiptype.description";
+	.
+map:relationshipOrder a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipType;
+	d2rq:property vocab:hasOrderNumber;
+	d2rq:propertyDefinitionLabel "Relationship order number";
+	d2rq:column "promrep_relationshiptype.order";
+	d2rq:datatype xsd:integer;
+	.
+
+# Table promrep_roletype
+#map:RoleType a d2rq:ClassMap;
+#	d2rq:dataStorage map:database;
+#	d2rq:uriPattern "RoleType/@@promrep_roletype.id@@";
+#	d2rq:class vocab:RoleType;
+#	d2rq:classDefinitionLabel "RoleType";
+#	.
+#map:roleTypeLabel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:RoleType;
+#	d2rq:property rdfs:label;
+#	d2rq:pattern "Role Type: #@@promrep_roletype.name@@";
+#	.
+#map:roleTypeID a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:RoleType;
+#	d2rq:property vocab:hasID;
+#	d2rq:propertyDefinitionLabel "RoleType id";
+#	d2rq:column "promrep_roletype.id";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:roleTypeName a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:RoleType;
+#	d2rq:property vocab:hasName;
+#	d2rq:propertyDefinitionLabel "RoleType name";
+#	d2rq:column "promrep_roletype.name";
+#	.
+#map:roleTypeDescription a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:RoleType;
+#	d2rq:property vocab:hasDescription;
+#	d2rq:propertyDefinitionLabel "RoleType description";
+#	d2rq:column "promrep_roletype.description";
+#	.
+
+# Table promrep_secondarysource
+map:SecondarySource a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "SecondarySource/@@promrep_secondarysource.id@@";
+	d2rq:class vocab:SecondarySource;
+	d2rq:classDefinitionLabel "SecondarySource";
+	.
+map:secondarySourceLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:SecondarySource;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Secondary Source: @@promrep_secondarysource.abbrev_name@@";
+	.
+map:secondarySourceID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:SecondarySource;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "SecondarySource id";
+	d2rq:column "promrep_secondarysource.id";
+	d2rq:datatype xsd:integer;
+	.
+map:secondarySourceName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:SecondarySource;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "SecondarySource name";
+	d2rq:column "promrep_secondarysource.name";
+	.
+map:secondarySourceAbbrevName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:SecondarySource;
+	d2rq:property vocab:hasAbbreviation;
+	d2rq:propertyDefinitionLabel "SecondarySource abbreviated name";
+	d2rq:column "promrep_secondarysource.abbrev_name";
+	.
+map:secondarySourceBiblio a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:SecondarySource;
+	d2rq:property vocab:hasBiblio;
+	d2rq:propertyDefinitionLabel "SecondarySource biblio";
+	d2rq:column "promrep_secondarysource.biblio";
+	.
+
+# Table promrep_sex
+map:Sex a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "Sex/@@promrep_sex.name@@";
+	d2rq:class vocab:Sex;
+	d2rq:classDefinitionLabel "Sex";
+	.
+map:sexLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Sex;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Sex: @@promrep_sex.name@@";
+	.
+map:sexID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Sex;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "Sex id";
+	d2rq:column "promrep_sex.id";
+	d2rq:datatype xsd:integer;
+	.
+map:sexName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Sex;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "Sex name";
+	d2rq:column "promrep_sex.name";
+	.
+
+# Table promrep_statusassertion
+map:StatusAssertion a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "StatusAssertion/@@promrep_statusassertion.id@@";
+	d2rq:class vocab:StatusAssertion;
+	d2rq:classDefinitionLabel "StatusAssertion";
+	.
+map:statusAssertionLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Status Assertion: #@@promrep_statusassertion.id@@";
+	.
+map:statusAssertionID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "StatusAssertion id";
+	d2rq:column "promrep_statusassertion.id";
+	d2rq:datatype xsd:integer;
+	.
+map:statusAssertionUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:isUncertain;
+	d2rq:propertyDefinitionLabel "StatusAssertion uncertain";
+	d2rq:column "promrep_statusassertion.uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:statusAssertionOriginalText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasOriginalText;
+	d2rq:propertyDefinitionLabel "StatusAssertion original_text";
+	d2rq:column "promrep_statusassertion.original_text";
+	.
+map:statusAssertionExtraInfo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasExtraInfo;
+	d2rq:propertyDefinitionLabel "StatusAssertion extra_info";
+	d2rq:column "promrep_statusassertion.extra_info";
+	.
+#map:statusAssertionReviewFlag a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:StatusAssertion;
+#	d2rq:property vocab:isReviewFlag;
+#	d2rq:propertyDefinitionLabel "StatusAssertion review_flag";
+#	d2rq:column "promrep_statusassertion.review_flag";
+#	d2rq:valueRegex "^[01]*$";
+#	.
+map:statusAssertionDateStart a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasDateStart;
+	d2rq:propertyDefinitionLabel "StatusAssertion date_start";
+	d2rq:column "promrep_statusassertion.date_start";
+	d2rq:datatype xsd:integer;
+	.
+map:statusAssertionDateStartUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:isDateStartUncertain;
+	d2rq:propertyDefinitionLabel "StatusAssertion date_start_uncertain";
+	d2rq:column "promrep_statusassertion.date_start_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:statusAssertionDateEnd a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasDateEnd;
+	d2rq:propertyDefinitionLabel "StatusAssertion date_end";
+	d2rq:column "promrep_statusassertion.date_end";
+	d2rq:datatype xsd:integer;
+	.
+map:statusAssertionDateEndUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:isDateEndUncertain;
+	d2rq:propertyDefinitionLabel "StatusAssertion date_end_uncertain";
+	d2rq:column "promrep_statusassertion.date_end_uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:statusAssertionDateDisplayText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasDateDisplayText;
+	d2rq:propertyDefinitionLabel "StatusAssertion date_display_text";
+	d2rq:column "promrep_statusassertion.date_display_text";
+	.
+map:statusAssertionDateSourceText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasDateSourceText;
+	d2rq:propertyDefinitionLabel "StatusAssertion date_source_text";
+	d2rq:column "promrep_statusassertion.date_source_text";
+	.
+map:statusAssertionPersonIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:isAboutPerson;
+	d2rq:refersToClassMap map:Person;
+	d2rq:join "promrep_statusassertion.person_id => promrep_person.id";
+	.
+map:statusAssertionSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasSecondarySource;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_statusassertion.secondary_source_id => promrep_secondarysource.id";
+	.
+map:statusAssertionDateSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasDateSecondarySource;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_statusassertion.date_secondary_source_id => promrep_secondarysource.id";
+	.
+map:statusAssertionStatusIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasStatus;
+	d2rq:refersToClassMap map:StatusType;
+	d2rq:join "promrep_statusassertion.status_id => promrep_statustype.id";
+	.
+#added to deal with promrep_statusassertion_notes intersection set table
+
+map:statusAssertionHasNote a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertion;
+	d2rq:property vocab:hasStatusAssertionNote;
+	d2rq:refersToClassMap map:StatusAssertionNote;
+	d2rq:join "promrep_statusassertion.id <= promrep_statusassertion_notes.statusassertion_id";
+	d2rq:join "promrep_statusassertion_notes.statusassertionnote_id => promrep_statusassertionnote.id";
+.
+
+# Table promrep_statusassertion_notes
+#map:StatusAssertionNotes a d2rq:ClassMap;
+#	d2rq:dataStorage map:database;
+#	d2rq:uriPattern "StatusAssertion_notes/@@promrep_statusassertion_notes.id@@";
+#	d2rq:class vocab:statusAssertionNotes;
+#	d2rq:classDefinitionLabel "StatusAssertion_notes";
+#	.
+#map:statusAssertionNotesLabel a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:StatusAssertionNotes;
+#	d2rq:property rdfs:label;
+#	d2rq:pattern "Status Assertion Notes: #@@promrep_statusassertion_notes.id@@";
+#	.
+#map:statusAssertionNotesID a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:StatusAssertionNotes;
+#	d2rq:property vocab:hasID;
+#	d2rq:propertyDefinitionLabel "StatusAssertion_notes id";
+#	d2rq:column "promrep_statusassertion_notes.id";
+#	d2rq:datatype xsd:integer;
+#	.
+#map:statusAssertionNotesStatusAssertionIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:StatusAssertionNotes;
+#	d2rq:property vocab:hasStatusassertion;
+#	d2rq:refersToClassMap map:StatusAssertion;
+#	d2rq:join "promrep_statusassertion_notes.statusassertion_id => promrep_statusassertion.id";
+#	.
+#map:statusAssertionNotesStatusAssertionNoteIDRef a d2rq:PropertyBridge;
+#	d2rq:belongsToClassMap map:StatusAssertionNotes;
+#	d2rq:property vocab:hasStatusassertionnote;
+#	d2rq:refersToClassMap map:StatusAssertionNote;
+#	d2rq:join "promrep_statusassertion_notes.statusassertionnote_id => promrep_statusassertionnote.id";
+#	.
+
+# Table promrep_statusassertionnote
+map:StatusAssertionNote a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "StatusAssertionNote/@@promrep_statusassertionnote.id@@";
+	d2rq:class vocab:StatusAssertionNote;
+	d2rq:classDefinitionLabel "StatusAssertionNote";
+	.
+map:statusAssertionNoteLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionNote;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Status Assertion Note: #@@promrep_statusassertionnote.id@@";
+	.
+map:statusAssertionNoteID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionNote;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "StatusAssertionNote id";
+	d2rq:column "promrep_statusassertionnote.id";
+	d2rq:datatype xsd:integer;
+	.
+map:statusAssertionNoteText a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionNote;
+	d2rq:property vocab:hasNoteText;
+	d2rq:propertyDefinitionLabel "StatusAssertionNote text";
+	d2rq:column "promrep_statusassertionnote.text";
+	.
+map:statusAssertionNoteExtraInfo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionNote;
+	d2rq:property vocab:hasExtraInfo;
+	d2rq:propertyDefinitionLabel "StatusAssertionNote extra_info";
+	d2rq:column "promrep_statusassertionnote.extra_info";
+	.
+map:statusAssertionNoteNoteTypeIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionNote;
+	d2rq:property vocab:hasNoteType;
+	d2rq:refersToClassMap map:NoteType;
+	d2rq:join "promrep_statusassertionnote.note_type_id => promrep_notetype.id";
+	.
+map:statusAssertionNoteSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionNote;
+	d2rq:property vocab:hasSecondarySourceForNote;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_statusassertionnote.secondary_source_id => promrep_secondarysource.id";
+	.
+
+# Table promrep_statusassertionprovince
+map:StatusAssertionProvince a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "StatusAssertionProvince/@@promrep_statusassertionprovince.id@@";
+	d2rq:class vocab:StatusAssertionProvince;
+	d2rq:classDefinitionLabel "StatusAssertionProvince";
+	.
+map:statusAssertionProvinceLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionProvince;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Status Assertion Province:  #@@promrep_statusassertionprovince.id@@";
+	.
+map:statusAssertionProvinceID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionProvince;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "StatusAssertionProvince id";
+	d2rq:column "promrep_statusassertionprovince.id";
+	d2rq:datatype xsd:integer;
+	.
+map:statusAssertionProvinceUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionProvince;
+	d2rq:property vocab:isProvinceUncertain;
+	d2rq:propertyDefinitionLabel "StatusAssertionProvince uncertain";
+	d2rq:column "promrep_statusassertionprovince.uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:statusAssertionProvinceNote a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionProvince;
+	d2rq:property vocab:hasNoteText;
+	d2rq:propertyDefinitionLabel "StatusAssertionProvince note";
+	d2rq:column "promrep_statusassertionprovince.note";
+	.
+map:statusAssertionProvinceStatusAssertionIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionProvince;
+	d2rq:property vocab:hasStatusAssertion;
+	d2rq:refersToClassMap map:StatusAssertion;
+	d2rq:join "promrep_statusassertionprovince.status_assertion_id => promrep_statusassertion.id";
+	.
+map:statusAssertionProvinceProvinceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusAssertionProvince;
+	d2rq:property vocab:hasProvince;
+	d2rq:refersToClassMap map:Province;
+	d2rq:join "promrep_statusassertionprovince.province_id => promrep_province.id";
+	.
+
+# Table promrep_statustype
+map:StatusType a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "Status/@@promrep_statustype.id@@";
+	d2rq:class vocab:Status;
+	d2rq:classDefinitionLabel "Status";
+	.
+map:statusTypeLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusType;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Status: @@promrep_statustype.name@@";
+	.
+map:statusTypeID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusType;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "Status id";
+	d2rq:column "promrep_statustype.id";
+	d2rq:datatype xsd:integer;
+	.
+map:statusTypeName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusType;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "Status name";
+	d2rq:column "promrep_statustype.name";
+	.
+map:statusTypeAbbrev a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusType;
+	d2rq:property vocab:hasAbbreviation;
+	d2rq:propertyDefinitionLabel "Status abbreviation";
+	d2rq:column "promrep_statustype.abbrev_name";
+	.
+map:statusTypeDescription a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:StatusType;
+	d2rq:property vocab:hasDescription;
+	d2rq:propertyDefinitionLabel "Status description";
+	d2rq:column "promrep_statustype.description";
+	.
+
+# Table promrep_tribe
+map:Tribe a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "Tribe/@@promrep_tribe.id@@";
+	d2rq:class vocab:Tribe;
+	d2rq:classDefinitionLabel "Tribe";
+	.
+map:tribeLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Tribe;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Tribe: @@promrep_tribe.name@@";
+	.
+map:tribeID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Tribe;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "Tribe id";
+	d2rq:column "promrep_tribe.id";
+	d2rq:datatype xsd:integer;
+	.
+map:tribeAbbrev a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Tribe;
+	d2rq:property vocab:hasAbbreviation;
+	d2rq:propertyDefinitionLabel "Tribe abbreviation";
+	d2rq:column "promrep_tribe.abbrev";
+	.
+map:tribeName a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Tribe;
+	d2rq:property vocab:hasName;
+	d2rq:propertyDefinitionLabel "Tribe name";
+	d2rq:column "promrep_tribe.name";
+	.
+map:tribeExtraInfo a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:Tribe;
+	d2rq:property vocab:hasExtraInfo;
+	d2rq:propertyDefinitionLabel "Tribe extra_info";
+	d2rq:column "promrep_tribe.extra_info";
+	.
+
+# Table promrep_tribeassertion
+map:TribeAssertion a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "TribeAssertion/@@promrep_tribeassertion.id@@";
+	d2rq:class vocab:TribeAssertion;
+	d2rq:classDefinitionLabel "TribeAssertion";
+	.
+map:tribeAssertionLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:TribeAssertion;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Tribe Assertion: #@@promrep_tribeassertion.id@@";
+	.
+map:tribeAssertionID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:TribeAssertion;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "TribeAssertion id";
+	d2rq:column "promrep_tribeassertion.id";
+	d2rq:datatype xsd:integer;
+	.
+map:tribeAssertionUncertain a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:TribeAssertion;
+	d2rq:property vocab:isUncertain;
+	d2rq:propertyDefinitionLabel "TribeAssertion uncertain";
+	d2rq:column "promrep_tribeassertion.uncertain";
+	d2rq:valueRegex "^[01]*$";
+	.
+map:tribeAssertionNotes a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:TribeAssertion;
+	d2rq:property vocab:hasNotes;
+	d2rq:propertyDefinitionLabel "TribeAssertion notes";
+	d2rq:column "promrep_tribeassertion.notes";
+	.
+map:tribeAssertionTribeIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:TribeAssertion;
+	d2rq:property vocab:hasTribe;
+	d2rq:refersToClassMap map:Tribe;
+	d2rq:join "promrep_tribeassertion.tribe_id => promrep_tribe.id";
+	.
+map:tribeAssertionSecondarySourceIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:TribeAssertion;
+	d2rq:property vocab:hasSecondarySource;
+	d2rq:refersToClassMap map:SecondarySource;
+	d2rq:join "promrep_tribeassertion.secondary_source_id => promrep_secondarysource.id";
+	.
+map:tribeAssertionPersonIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:TribeAssertion;
+	d2rq:property vocab:isAboutPerson;
+	d2rq:refersToClassMap map:Person;
+	d2rq:join "promrep_tribeassertion.person_id => promrep_person.id";
+	.
+# ===========================================================================
+# Table promrep_relationshipinverse
+map:RelationshipInverse a d2rq:ClassMap;
+	d2rq:dataStorage map:database;
+	d2rq:uriPattern "promrep_relationshipinverse/@@promrep_relationshipinverse.id@@";
+	d2rq:class vocab:RelationshipInverse;
+	d2rq:classDefinitionLabel "Relationship Inverse";
+	.
+map:relationshipInverseLabel a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipInverse;
+	d2rq:property rdfs:label;
+	d2rq:pattern "Relationship Inverse #@@promrep_relationshipinverse.id@@";
+	.
+map:relationshipInverseID a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipInverse;
+	d2rq:property vocab:hasID;
+	d2rq:propertyDefinitionLabel "Relationship Inverse id";
+	d2rq:column "promrep_relationshipinverse.id";
+	d2rq:datatype xsd:integer;
+	.
+map:relationshipInverseInverseRelationshipIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipInverse;
+	d2rq:property vocab:hasInverseRelationship;
+	d2rq:refersToClassMap map:RelationshipType;
+	d2rq:join "promrep_relationshipinverse.inverse_relationship_id => promrep_relationshiptype.id";
+	.
+map:relationshipInverseRelationshipIDRef a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipInverse;
+	d2rq:property vocab:forRelationship;
+	d2rq:refersToClassMap map:RelationshipType;
+	d2rq:join "promrep_relationshipinverse.relationship_id => promrep_relationshiptype.id";
+	.
+map:promrep_relationshipinverse_sex_id__ref a d2rq:PropertyBridge;
+	d2rq:belongsToClassMap map:RelationshipInverse;
+	d2rq:property vocab:forSex;
+	d2rq:refersToClassMap map:Sex;
+	d2rq:join "promrep_relationshipinverse.sex_id => promrep_sex.id";
+	.

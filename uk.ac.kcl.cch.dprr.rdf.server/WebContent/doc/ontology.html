@@ -1,0 +1,439 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8"> 
+<title>DPRR RDF: Documentation: the Ontology</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="css/w3-theme-black.css">
+<!-- link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/font-awesome.css" -->
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: sans-serif;}
+.w3-sidebar {
+  z-index: 3;
+  width: 250px;
+  top: 43px;
+  bottom: 0;
+  height: inherit;
+}
+</style>
+<script src="sidebar.js"></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<!-- div class="w3-container w3-top" style="background-color: black; color: white" -->
+<div class="w3-top" style="margin: 0px; padding: 0px">
+<div style="padding: 5px 0px; background-color: rgb(96, 122, 122) !important;">
+  <div class="w3-theme w3-teal" style="background-color: rgb(232, 224, 218) !important; color: rgb(96, 122, 122) !important;">
+    <h3 style="height: 80px;"><img src="images/logo.png" style="vertical-align: middle" /> DPRR: RDF Services Documentation</h3>
+  </div>
+  </div>
+  <div class="w3-bar w3-left-align w3-large" style="background-color: black; color: white">
+    <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Home</a>
+    <a href="why.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Why RDF</a>
+    <a href="using.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Using the Server</a>
+    <a href="#" class="w3-bar-item w3-button w3-theme-l1">DPRR Ontology</a>
+    <a href="building.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Building the Server</a>
+    <a href="http://www.romanrepublic.ac.uk" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white w3-right">DPRR Home</a>
+    <a href="/rdf" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white w3-right">DPRR RDF Server</a>
+   </div>
+</div>
+
+<!-- Sidebar -->
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar" style="top: 153px">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4 class="w3-bar-item"><b>Contents</b></h4>
+  <div id="sidebar-contents">
+  <!-- a class="w3-bar-item w3-button w3-hover-black" href="javascript:jumpTo('top')">Top</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="javascript:jumpTo('about')">About DPRR</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="javascript:jumpTo('why')">Why a DPRR RDF Server?</a>
+  <a class="w3-bar-item w3-button w3-hover-black" href="javascript:jumpTo('building')">Building the RDF</a -->
+  </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+<div style="height: 160px;">&nbsp;</div>
+<div class="w3-main" style="margin-left:250px">
+
+  <div class="w3-row">
+    <div class="w3-twothird w3-container">
+      <h1 class="w3-text-teal" id="top">The DPRR Ontology</h1>
+
+<p>A basic OWL ontology has been
+developed which describes the data structure of the DPRR rdf repository.  Its URI is:</p>
+
+<p><a href="http://romanrepublic.ac.uk/rdf/ontology#"><code>http://romanrepublic.ac.uk/rdf/ontology#</code></a></p>
+
+<p>In this part of the DPRR rdf
+documentation we present an overall semantic conception of DPRR’s ontology. </p>
+
+<p>As mentioned elsewhere, although
+DPRR follows a few of the principles of the factoid prosopography model, it is
+not a factoid prosopography, and so it is important to understand that DPRR’s
+ontology is not based on the factoid prosopography ontology (FPO) described at 
+<a href="http://factoid-dighum.kcl.ac.uk/">http://factoid-dighum.kcl.ac.uk/</a>. </p>
+
+<p>This documentation for the
+ontology is divided into three parts. </p>
+<ul>
+<li>First, there is a very brief description of DPRR's data model, which underpins its ontology.</li>
+<li>Then, in the class hierarcy section, one gets an upper level view of the
+classes in DPRR’s ontology with information about what the meanings of DPRR’s
+classes are, and how these classes are linked together through subclassing, and
+through data relationships (what owl calls “object properties”). These are all
+described in the overview section.</li>
+<li>In addition, a set of HTML pages have been generated from the owl
+file that present it in a somewhat more human-readable form.  It contains
+information about all the data in the owl file, thus, not only the “object
+property” and subclassing characteristics described in the overview, but the other
+properties that are strings and numbers that represent other kinds of data for
+the class (what owl calls “data properties”) as well.   You can find this <a href="../ontology/doc/index.html">here</a>.</li>
+</ul>
+
+<h3 id="overview">Overview</h3>
+<p>DPRR's RDF data is a representation of the structured data model upon which DPRR's database was created, and which is
+described briefly in DPRR's <a href="http://romanrepublic.ac.uk/technical-overview/">technical pages</a>. Thus, to understand DPRR's ontology,
+it is useful to first understand the simplified data structure diagram that is shown there:</p>
+
+<img src="http://romanrepublic.ac.uk/static/media/images/dprr_model-3.width-800.png" style="margin: 20px""/>
+
+<p>Here one can see that the overarching structure for DPRR, and hence for its ontology, involves a collection of a few kinds of 
+assertions about historical people, as is drawn from various secondary (modern) prosopographical sources.  You can see this overarching
+structure, extended by a more detailed structure, incorporated into the ontology, and thus shown both the ontology's class
+hierarchy and class relationship diagrams presented below.</p>
+
+<h3 id="class-hier">DPRR ontology class hierarchy</h3>
+<p>The figure below presents the DPRR
+Ontologies SubClass hierarchy as shown in the ontology editing software
+Protégé.  Several things to note here:</p>
+
+<img src="images/class-hierarchy.png" style="margin: 20px" align="left"/>
+<ul>
+<li><b>owl:Thing</b>: As one would expect for an OWL-based ontology
+like DPRR, all classes are subclass of <i>owl:Thing</i></li>
+
+<li><b>vocab:ThingWithID</b> : Furthermore, all DPRR classes
+are subclasses of <i>vocab:ThingWithID</i>.  This reflects that fact that all
+data in the DPRR rdf dataset comes from a relational database, and all entities
+in it define a primary key which is made available in DPRR's RDF through the data property <i>vocab:hasID</i>.
+</li>
+
+<li><b>vocab:ThingWithName</b>:  About half of DPRR’s classes are
+subclasses of <i>vocab:ThingWithName</i>, represent kinds of data that have a
+string of characters which can be categorised as a “name” for the thing. 
+People of course, have names, so <i>vocab:Person</i> appears as a subclass of <i>vocab:ThingWithName</i>. 
+However, other things in DPRR have names too, and the other major kind of data
+are different kinds of Authority Lists (such as lists of Offices, lists of
+Praenomen, etc).  <i>vocab:ThingWithName</i> classes all have a data property <i>vocab:hasName</i>.</li>
+
+<li><b>vocab:AuthorityList</b>: Authority lists have already been
+mentioned as one kind of “Thing with name”, and represent a list of things that
+might be thought of as functioning like what in library science is called an
+Authority File: “A compilation of records that describe the preferred form of
+headnames for use in a catalog” (<a
+href="https://definedterm.com/authority_file_also_authority_list">https://definedterm.com/authority_file_also_authority_list</a>).
+In DPRR not only bibiliographic objects are formed into authority lists, but
+other classification schemes as well: vocab:Office, for example, has  instances
+which are the names for Offices in the Roman Republic.</li>
+
+<li><b>vocab:AuthorityWithAbbreviation</b>: One kind of Authority
+List also has an associated abbreviation for each name.  <i>vocab:has
+Abbreviation</i> is the property used to specify the abbreviation.</li>
+
+<li><b>vocab:Source</b>: DPRR got most of its data from secondary
+sources, but these in turn usually made reference to primary historical
+sources.  Thus, the two kinds of sources are both subclasses of <b>vocab:Source</b>.
+<b>N.B.:</b> Although there is some structure for primary sources in DPRR's ontology, time
+was not found in the project to make use of this structure.  There is, as a
+consequence, at present almost no structured data about primary sources in the DPRR rdf
+repository, although this could change in any future work on DPRR.</li>
+
+<li><b>vocab:AuthorityWithDescription</b>: Another kind of Authority
+List has a property to hold a description for each Authority item.  <i>vocab:hasDescription</i>
+is that property. Note that only <i>vocab:Office</i> has <i>both</i> an
+abbreviation and description, and hence is a subclass of both.</li>
+
+<li><b>Vocab:HierarchicalAuthority</b>: A third kind of Authority
+List is used when the items in an authority list can be organised
+hierarchically.  Authority lists of this kind all share a property <i>vocab:hasParent
+</i>which allows the hierarchical structure to be presented.</li>
+
+<li><b>vocab:Assertion</b>: The bulk of DPRR’s data are assertions
+about people. Property <i>vocab:isAboutPerson</i> specifies the DPRR person who
+the assertion is about. In DPRR assertions are derived from statements made in
+secondary sources. So each <i>vocab:Assertion</i> also has a property <i>vocab:hasSecondarySource</i>,
+The five subclasses of <i>vocab:Assertion</i> are for <i>kinds</i> of
+assertions, <i>vocab:PostAssertion</i>, for example, is for an assertion made
+about an office post that a DPRR person held.</li>
+
+<li><b>vocab:AssertionWithDateRange</b>: Two types of assertions (<i>vocab:PostAssertion</i>
+and <i>vocab:StatusAssertion</i>) contain dating information &#x2014; DPRR’s view of
+when the person held the post or had the particular status.  Thus, this
+subclass of <i>vocab:Assertion</i> also contains date range information.</li>
+
+<li><b>vocab:NoteContainer</b>: A Note Container is a class of object
+that contains a note.  A Note itself is the most basic kind of Note Container,
+but other classes, which also contain other information, also contain a note
+and are, therefore, Note Containers too.  DPRR used notes generally because their
+secondary sources often did so to provide an explanation about why a particular
+assertion was made, or to enrich the information about the thing to which the note
+is attached.  All Note Contains have the <i>vocab:hasText</i> property, where
+the text of the note is presented.</li>
+
+<li><b>vocab:Note</b>: is a note itself.  Obviously, a note is also a
+Note Container. SubClasses of <i>vocab:Note</i> provide classes for notes that
+can be associated with other DPRR classes: Persons, Post Assertions and Status
+Assertions.</li>
+</ul>
+
+<p>You will have noted that not all
+the classes in the hierarchical class figure are listed above, and indeed none of the hierarchical
+“leaf” classes are mentioned.  The ones that are in this figure express a
+hierarchical clustering that brings classes with certain common semantic
+characteristics together. The other classes, not described above, are derived
+directly from DPRR’s database tables. Their semantics are given in the detailed
+formal description of the ontology generated by OWLDoc and found <a href="../ontology/doc/index.html">here</a>.</p>
+
+<h3 id="relationships">Ontology Class Relationship Diagram</h3>
+
+<p>The following figure presents all the
+Classes in DPRR’s ontology and shows how they relate to each other through <code>owl:ObjectProperties</code>.</p>
+
+<a href="images/classDiagram.png" target="_blank"><img src="images/classDiagram.png" class="w3-border w3-padding" /></a>
+
+<p>When studying this figure, you should first note that it is meant to be a
+broad overview of the classes, and leaves out many
+details.  For example, no <code>owl:DataProperties</code> are shown in the diagram, and the
+SubClassing hierarchy is not fully shown either.  Nonetheless, a broad overview
+is helpful if you are trying to grasp the structure overall.</p>
+
+<p>First, about the legend.  As it tells you:</p>
+<ul>
+<li>the double-line arrows show Class-&gt;SubClass connections
+between classes, with the arrow head placed at the SubClass end of each
+connection.</li>
+
+<li>the single line arrows show connections between Classes defined
+by owl:ObjectProperties.  The name of the property is shown on each line, and
+the arrow head end is the “range” part of the relationship.</li>
+
+<li>a reader of the text that accompanies the previous Class Hierarchy figure
+will have noted that there are three overarching categories of Classes. You can see this
+reflected in the colour of the boxes representing the classes in this figure.
+<ul>
+<li>all those in
+Brown are different kinds of Authority Lists,</li>
+
+<li>all those in Red are different kinds of Assertions, and</li>
+
+<li>all those in Green are different kinds of Notes or Note Containers.</li>
+</ul></li>
+</ul>
+
+<h4>A Guided Tour</h4>
+
+<p>The class relationship diagram just provided shows the classes in
+the DPRR ontology as coloured boxes with two types of arrows connecting them. 
+In this section, we will focus on the significance of the black, named, arrows,
+which present Class connections expressed by the <code>owl:ObjectProperty</code> mechanism.
+The reader may have noted the “:” before class names in this diagram.  This
+implies the base URI prefix for DPRR’s ontology that applies to all the items
+in the diagram: <a href="http://romanrepublic.ac.uk/rdf/ontology">http://romanrepublic.ac.uk/rdf/ontology#</a></p>
+
+<p>In the ontology itself, this URI
+is given the prefix “vocab:”, although in the following discussion the <i>vocab:</i>
+prefix is left out purely for the sake of compactness.</p>
+
+<p><b>Persons</b></p>
+
+<p>DPRR is a prosopographical
+project, so an important class is <i>:Person</i>, shown at the left side of the
+diagram.  DPRR Persons have a rich set of <i>owl:DataProperties</i>, listed in
+the section about :Person in the OWLDoc pages in
+<a href="../ontology/doc">http://romanrepublic.ac.uk/rdf/ontology/doc</a>.  However, one can see in this
+diagram that <i>:Person</i> also connects to several other data classes.  One
+is <i>:Sex</i>, connected through the <i>:Person</i> property <i>:isSex</i>. 
+By being coloured brown, we can see that <i>:Sex</i> is an Authority List. 
+This bit of the diagram, then, is telling us that triples such as the following
+exist in the repository:</p>
+
+<p><code></code>&lt;http://romanrepublic.ac.uk/rdf/entity/Person/1&gt;
+:isSex &lt;http://romanrepublic.ac.uk/rdf/entity/Sex/Male&gt;</code></p>
+
+<p>Where <i>http://romanrepublic.ac.uk/rdf/entity/Person/1</i>
+is a URI for a particular person in DPRR, and <i>http://romanrepublic.ac.uk/rdf/entity/Sex/Male</i>
+is a particular Sex.</p>
+
+<p>As with <i>:isSex</i> and <i>:Sex</i>,
+we can also see connections between :Person and the <i>:Praenomen</i> entity. 
+Roman naming conventions gave most males, and many females, a “Praenomen”,
+which is one of a relatively short list of standard first names.  The set of Praenomena
+used in DPRR is provided by the <i>:Praenomen</i> Authority list, and we can
+see from the diagram that a Person will, in most cases, have one specified by
+means of the <i>:hasPraenomen</i> property, and perhaps an alternative one via
+the <i>:hasAltPraenomen</i> property.</p>
+
+<p>DPRR has also attached notes,
+often from secondary sources, about its persons. You can see the link from <i>:Person</i>
+to <i>:PersonNote</i> through the property <i>:hasPersonNote</i>.  As it turns
+out, any single person can have more than one <i>:PersonNote</i> linked through
+multiple use of the <i>:hasPersonNote</i> property.  The possibility of
+multiple occurrences of a property does not apply for all properties attached
+to this or any other Class in DPRR, for example this possibility of multiple
+references does not apply to the <i>:isSex</i> property in DPRR. Furthermore, the fact that
+multiple occurrences of <i>:hasPersonNote</i> might occur, but only one <i>:isSex</i>
+property is allowed is not shown in this figure.</p>
+
+<p><b>Assertions</b></p>
+
+<p>Most of the data for DPRR is made
+up of assertions about persons.  As the relationship figure shows, there are several kinds of
+assertions, all subclasses of the general <i>:Assertion</i> class.  Assertion
+classes are shown in red boxes in the figure.  From <i>:Assertion</i> we can see that
+a relationship is connected to <i>:Person</i> it is about through the <i>:isAboutPerson
+</i>attribute.  Since this <i>owl:objectProperty</i> is defined for the <i>:Assertion</i>
+class, we can infer that all its subclasses, e.g. <i>:DateInformation</i>, <i>:RelationshipAssertion</i>,
+etc, also have this property, and can also use it to connect an assertion to
+the relevant person to which it applies.</p>
+
+<p>In DPRR most assertions come from
+a secondary source.  Thus, one can see (perhaps with difficulty) an
+owl:ObjectProperty called :hasSecondarySource that connects :Assertion to its
+:SecondarySource.  See more about links between assertions and sources in the
+section on Sources below.</p>
+
+<p>Most types of Assertions in DPRR
+connect a Person to a particular kind of associated Authority List.  <i>:PostAssertion</i>,
+for instance, connects persons to offices, and you can see the property <i>:hasOffice</i>
+connecting <i>:PostAssertion</i> to <i>:Office</i>.  This kind of structure
+also applies to <i>:StatusAssertion</i> and <i>:TribeAssertion</i>.  <i>:RelationshipAssertion</i>,
+by its very nature connects two people to a kind of relationship, not just one,
+and you can see in the diagram that <i>:RelationshipAssertion</i> has not only
+the <i>:isAboutPerson</i> property (that it inherits from its parent class <i>:Assertion</i>),
+but also the <i>:hasRelatedPerson</i> property. If then, person A is son of
+person B, A is the primary person connected from the <i>:RelationshipAssertion</i>
+through the <i>:isAboutPerson</i> property, and B is the secondary person
+connected through the <i>:hasRelatedPerson</i> property.  Many relationships
+have an implied inverse relationship (if A is son of B, B is father of A), and
+information about these inverses, as understood by DPRR, can be found in class <i>:RelationshipInverse</i>.</p>
+
+<p>Two kinds of Assertions, <i>:StatusAssertion</i>
+and <i>:PostAssertion</i> can have notes attached to them. <i><u>:StatusAssertion</u></i>
+can have a <i>:StatusAssertionNote</i> connected through the <i>:hasStatusAssertionNote</i>
+property.  As it turns out DPRR attached very few notes to Status Assertions. 
+However, the <i>:hasPostAssertionNote</i> link between a <i>:PostAssertion</i>
+and a <i>:PostAssertionNote</i> happens quite frequently since the main
+secondary source for information about posts, Broughton, provides many notes.</p>
+
+<p><i>:StatusAssertion</i> and <i>:PostAssertion</i>
+also have date ranges that apply to them.  They thus are both subclasses of <i>:AssertionWithDateRange</i>,
+which contains text and numeric properties that allow it to specify a date
+range.</p>
+
+<p><i>:DateInformation</i> is shown as a subclass of <i>:Assertion</i>, as indeed it is, but it
+operates somewhat differently from the other Assertions in that its primary
+function is not to connect persons to authority lists. Instead, it has <code>owl:DataProperties</code>
+that allow life dates about a person to be asserted.  You can see details about
+it in the detailed description of the class provided through OWLDoc <a href="/rdf/ontology/doc">here</a>.
+There is a link to <code>:DateType</code> authority list, and it is used to allow
+DPRR to specify the kind of life date that this particular one is.</p>
+
+<p>There is are relationships
+provided between status and post assertions to what Romans called a “Province”
+&#x2014; often, but not necessarily, a geographical location to which the post or
+status term applied.  <i>:Province</i> is the set of Provinces referenced by
+DPRR.  The <i>:StatusAssertionProvince</i> class connects <i>:StatusAssertion</i>
+to <i>:Province</i>, as the way to make the assertion, and similarly, the <i>:PostAssertionProvince</i>
+class connects <i>:PostAssertion</i> to a province in <i>:Province</i>.</p>
+
+<p>All assertions are backed up from
+secondary sources.  The link from <i>:Assertion</i> is provided by <i>:hasSecondarySource</i>.</p>
+
+<p><b>Authority Lists</b></p>
+
+<p>As the Class hierarchy diagram
+shows, DPRR authority lists are grouped broadly into two types, those with
+abbreviations, and those with associated descriptive text (and one that has
+neither: :Sex).  <i>(:Office</i> belongs to both groups). Two authority lists, <i>:Office</i>
+and <i>:Province</i>, are internal hierarchical organisations, which is
+expressed through their <i>:hasParent</i> property.</p>
+
+<p><b>Sources</b></p>
+
+<p>In the Class Relationships figure you can see that
+both Primary and Secondary sources (<i>:PrimarySource</i> and <i>:SecondarySource</i>)
+are subclassed from <i>:AuthorityWithAbbreviation</i>.  In addition to primary
+name and abbreviation, however, both <i>:Source</i> types have provision to
+support further bibiliographic data about the sources.  You can look up the details in the <a href="../ontology/doc/index.html">OWLDoc materials</a>.</p>
+
+<p>DPRR has been built with the
+purpose of bringing together primarily 20<sup>th</sup> and 21<sup>st</sup>
+century prosopographical scholarship about the Roman Republic.  For this
+reason, pretty well all the assertions made in DPRR come from one secondary
+source or another, and hence there is a link from <i>:Assertion</i> to <i>:SecondarySource</i>
+through the Assertion’s property <i>:hasSecondarySource</i>.</p>
+
+<p>Although some structure has been
+put in place to for primary historical sources, and in some cases the reference
+to the primary source as provided by the secondary source has been harvested,
+DRPP’s research team found that there was insufficient time to resolve these
+references to actual Primary Source objects in <i>:PrimarySource</i>.  Thus,
+this structure, although in place, should not at this time be expected to be
+useful for queries against DPRR data, since it is essentially not populated
+with data.</p>
+    </div>
+  </div>
+
+  <footer id="myFooter">
+    <div class="w3-container w3-theme-l2 w3-padding-32">
+      <p><b>Copyright 2017 John Bradley, King's College London</b></p>
+	  <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+    </div>
+
+    <div class="w3-container w3-theme-l1">
+      <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </div>
+  </footer>
+
+<!-- END MAIN -->
+</div>
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+buildSidebar();
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidebar.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+}
+
+function dummy(){
+   window.alert("dummy");
+}
+</script>
+
+
+</body></html>

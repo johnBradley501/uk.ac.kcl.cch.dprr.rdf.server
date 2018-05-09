@@ -1,0 +1,540 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8"> 
+<title>DPRR RDF: Documentation: Building the Server</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/w3.css">
+<link rel="stylesheet" href="css/w3-theme-black.css">
+<!-- link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/font-awesome.css" -->
+<style>
+html,body,h1,h2,h3,h4,h5,h6 {font-family: sans-serif;}
+.w3-sidebar {
+  z-index: 3;
+  width: 250px;
+  top: 43px;
+  bottom: 0;
+  height: inherit;
+}
+</style>
+<script src="sidebar.js"></script>
+</head>
+<body>
+
+<!-- Navbar -->
+<!-- div class="w3-container w3-top" style="background-color: black; color: white" -->
+<div class="w3-top" style="margin: 0px; padding: 0px">
+<div style="padding: 5px 0px; background-color: rgb(96, 122, 122) !important;">
+  <div class="w3-theme w3-teal" style="background-color: rgb(232, 224, 218) !important; color: rgb(96, 122, 122) !important;">
+    <h3 style="height: 80px;"><img src="images/logo.png" style="vertical-align: middle" /> DPRR: RDF Services Documentation</h3>
+  </div>
+  </div>
+  <div class="w3-bar w3-left-align w3-large" style="background-color: black; color: white">
+    <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1" href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+    <a href="index.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Home</a>
+    <a href="why.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Why RDF</a>
+    <a href="using.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Using the Server</a>
+    <a href="ontology.html" class="w3-bar-item w3-button w3-hide-small w3-hover-white">DPRR Ontology</a>
+    <a href="#" class="w3-bar-item w3-button w3-theme-l1">Building the Server</a>
+    <a href="http://romanrepublic.ac.uk" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white w3-right">DPRR Home</a>
+    <a href="/rdf" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hover-white w3-right">DPRR RDF Server</a>
+   </div>
+</div>
+
+<!-- Sidebar -->
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar" style="top: 153px">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+    <i class="fa fa-remove"></i>
+  </a>
+  <h4 class="w3-bar-item"><b>Contents</b></h4>
+  <div id="sidebar-contents">
+  </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+<div style="height: 160px;">&nbsp;</div>
+<div class="w3-main" style="margin-left:250px">
+
+  <div class="w3-row">
+    <div class="w3-twothird w3-container">
+      <h1 class="w3-text-teal" id="top">Building DPRR’s RDF data and server</h1>
+<p>DPRR’s data is served from an
+instance of the rdf4j-generated RDF repository, but weas created in a relational database.  So, to get the data from
+DPRR’s relational database into a set of triples required some software, some
+scripts, and a process that linked them together.  Here I will briefly describe
+how this process was carried out.</p>
+
+<h3 id="d2rq">D2RQ</h3>
+
+<p>The package D2RQ
+(<a href="http://d2rq.org/">http://d2rq.org/</a>) was the main tool used to take the data from the relational
+database into a corresponding set of RDF triples.  This is, indeed, D2RQ's job: as its website says, D2RQ
+“exposes the contents of relational databases as RDF”. Indeed, it
+<i>has</i> been used directly to publish dynamic data (for several life sciences projects) that
+is created and maintained in relational databases so that it can also be
+accessed as Open RDF data.</p>
+
+<p>Thus, D2RQ is interesting because it
+can do to things that might have been directly useful for the expression of DPRR as RDF. First, it can act
+as an RDF server itself, displaying data that is actually in a relational
+database but presented as a collection of RDF triples. When run this way,
+one can see the RDF data it is presented by connecting to it through a browser:</p>
+
+<p><img border=0 width=602 class="w3-border w3-padding"
+height=432 id="Picture 10" src="images/image009.jpg"></p>
+
+<p>Then, looking at
+one of the RDF entities shown here, say, “Office”, one is shown the URIs that
+are associated with the “Office” class:</p>
+
+<p><img border=0 width=602 class="w3-border w3-padding"
+height=432 id="Picture 11" src="images/image010.jpg"></p>
+
+<p>Choosing one of
+the Offices (say, dictator), D2RQ will display the triples associated with that
+office:</p>
+
+<p><img border=0 width=602 class="w3-border w3-padding"
+height=432 id="Picture 12" src="images/image011.jpg"></p>
+
+<p>The D2RQ architecture figure provided in the D2RQ documentation shows how this works. 
+We can see the HTML browser shown above as the third box on the left, and can
+see how it connects to the Non-RDF Database (for DPRR, this is a Postgres
+database) on the right:</p>
+
+<p><img border=0 width=384 class="w3-border w3-padding"
+height=311 id="Picture 8" src="images/image012.png"
+alt="D2RQ Platform architecture diagram"></p>
+
+<p>(From <a
+href="http://d2rq.org/images/architecture.png">http://d2rq.org/images/architecture.png</a>)</p>
+
+<p>Although D2RQ’s server can
+represent relational data as RDF triples, DPRR, for reasons given below, does
+not use the D2R Server directly to simply serve data from DPRR’s relational
+database as RDF.  Instead, it uses the other service that D2RQ can offer: the
+RDF dump tool that generates pure RDF in a file that can be subsequently loaded
+into a separate triple store. In the diagram the path to DPRR’s triple store
+comes from the bottom left box labelled “Triple Store”.</p>
+
+<h3 id="preparing">Preparing the D2RQ mapping file</h3>
+
+<p>A key element in the use of D2RQ
+is the D2RQ Mapping File (shown in the diagram above near its centre)
+which provides the D2RQ engine with the instructions (expressed as a sequence of RDF
+statements) about how to translate the entities,
+attributes and relationships of the relational (“non-RDF”) database into
+triples. In the DPRR project work, this file is called <i>dprr-mapping.ttl</i>.</p>
+
+<p>The information conveyed in this
+file is quite rich, and it is beyond the scope of this document to explain it
+in detail.  You can get the details for the “Mapping Language” that it
+expresses from D2RQ’s documentation at <a href="http://d2rq.org/d2rq-language">http://d2rq.org/d2rq-language</a>.
+However, a couple of short examples are still useful for us here.</p>
+
+<p>First, let us look at a fragment that
+expresses the relationship between the database table for offices and the RDF
+expression of this data that D2RQ generates.  The mapping from a database table
+to an RDF class is provided by an <tt>d2rq:ClassMap</tt> instance (shown here in RDF’s
+turtle notation):</p>
+
+<pre class="w3-border w3-padding">
+map:Office a d2rq:ClassMap;
+  d2rq:dataStorage map:database;
+  d2rq:uriPattern &quot;Office/@@promrep_office.id@@&quot;;
+  d2rq:class vocab:Office;
+  d2rq:classDefinitionLabel &quot;Office&quot;;
+.
+</pre>
+<p>The <code>d2rq:class</code> statement
+expresses the connection for our RDF “Office” class. It specifies that each instance of the RDF Office class will
+have an associated URI, and the <code>d2r1:uriPattern</code> statement provides a
+template for it, in this case drawing on the id field of the database’s <code>promrep_office</code>
+table.</p>
+
+<p>The connection between attributes
+in a relational database’s table, and the properties of an RDF class is
+provided by a <code>d2rq:PropertyBridge</code>.  Here is a simple example:</p>
+
+<pre class="w3-border w3-padding">
+map:officeName a d2rq:PropertyBridge;
+  d2rq:belongsToClassMap map:Office;
+  d2rq:property vocab:hasName;
+  d2rq:propertyDefinitionLabel &quot;Office name&quot;;
+  d2rq:column &quot;promrep_office.name&quot;;
+.
+</pre>
+
+<p>The property name for the RDF representation is given
+by the <code>d2rq:property</code> statement. The connection of this property to the
+Office class and table comes from the <code>d2rq:belongsToClassMap</code> statement,
+and the association to the particular table’s attribute is provided by the <code>d2rq:column</code>
+statement.</p>
+
+<p>This example of a PropertyBridge
+defines a property that in OWL would be considered to be a owl:DatatypeProperty, but of course
+not all properties are simple DataProperties. Indeed, the 
+definition for an owl:ObjectProperty must be rather different since it involves a
+relational join rather than a simple reference to an attribute of a table. 
+Furthermore, there are other expressions for other kinds of data from the DB
+that needs to be mapped to OWL properties. We do not provide examples here, although full examples
+are available from d2rq's documentation for its mapping language.</p>
+
+<p>The entire mapping file for DPRR
+consists of about 1800 lines/RDF statements.  That’s a lot of stuff to create
+accurately by hand.  And so D2RQ provides a utility tool, called <code>generate-mapping</code>
+that reads the structure in the relational database and creates a preliminary mapping
+file that maps all the data in the relational database into instructions that
+will cause D2RQ to present it.</p>
+
+<p>Although this tool provided a
+starting form for DPRR’s mapping file, it was clear to me that could not be used without being
+edited significantly.  Here are the bits of RDF that corresponds to Office and officeName as it
+appeared in the originally generated file:</p>
+
+<pre class="w3-border w3-padding">
+map:promrep_office a d2rq:ClassMap;
+  d2rq:dataStorage map:database;
+  d2rq:uriPattern &quot;promrep_office/@@promrep_office.id@@&quot;;
+  d2rq:class vocab:promrep_office;
+  d2rq:classDefinitionLabel &quot;promrep_office&quot;;
+.
+
+map:promrep_office_name a d2rq:PropertyBridge;
+  d2rq:belongsToClassMap map:promrep_office;
+  d2rq:property vocab:promrep_office_name;
+  d2rq:propertyDefinitionLabel &quot;promrep_office name&quot;;
+  d2rq:column &quot;promrep_office.name&quot;;
+.
+</pre>
+
+<p>Note that the names for the class
+and attributes are not as “user friendly” as what we have used in our mapping
+file.  This is because all <code>generate-mapping</code> had to work with was the
+table and attribute names in the database, and the DPRR database is actually
+created and managed by <i>Django</i>, and so the naming conventions used reflect
+django’s needs and are not particularly convenient to use as public names in
+RDF.</p>
+
+<p>It turns out that many changes
+had to be made to the file;s text to take the raw mapping file generated by <code>generate-mapping</code>
+into the form used to actually generate the RDF data used by DPRR. Among the
+various issues that needed to be dealt with were:</p>
+
+<ul>
+<li>many extra tables were generated by Django for its own uses, and
+did not contain data from DPRR that needed to be public.  All the material about them
+needed to be removed.</li>
+
+<li>fields were inserted by Django for various administrative
+purposes such as “created by” that did not need to be published.  The
+references to all these fields needed to be removed so that the data they
+contained did not appear in the RDF expression of DPRR’s data.</li>
+
+<li>Django named most DPRR data tables with the “promrep_” prefix,
+and this needed to be removed.</li>
+
+<li>Django used lowercase names only for tables and attributes, and
+these needed to be converted to camelcase.</li>
+
+<li>property names had to be changed to provide the “has”, “is” or
+“for” prefix.</li>
+
+<li>pure intersection set tables that provided many-to-many mappings in
+the conventional relational paradigm way needed to be removed as classes, and
+the many-to-many relationship that this intersection set table supported
+instead expressed as an owl:ObjectProperty that could occur multiple times if
+necessary.</li>
+</ul>
+
+<p>Furthermore, there were several
+more global changes, not listed here, that had to be made to make the mapping
+for DPRR work more naturally as RDF data.</p>
+
+<p>The work to do all these by hand
+would have been tedious and subject to error.  Thus, the process of fixing up the data
+was expressed as a sequence of individual steps.  Those that could be automated
+were carried out by little python scripts that took one version of the file in,
+performed a set of automated changes, and generated a new version out.  Not all
+the steps were able to be automated. In the end, there were 14 automated and by-end
+steps of transformation to the mapping file.</p>
+
+<p>In the end, however, we had a d2rq mapping file that allowed the d2rq server to present a pretty
+good (but not completely satisfactory, see below) representation
+of the RDF statements that were to be served by DPRR’s RDF server. The next step, then, was to
+develop a process that used d2rq’s tool (called <code>dump-rdf</code>) to generate a set
+of RDF statements from the database using its mapping file as a guide.</p>
+
+<h3 id="d2rqgem">Generating RDF statements with d2rq</h3>
+
+<p><code>Dump-rdf</code> largely generated a good
+set (about a 3<sup>rd</sup> of a million) of directly usable RDF statements. 
+However, there were still a few refinements that I wanted to make to this
+automatically generated RDF data.</p>
+
+<ul>
+<li>The most important change was that DPRR had developed a standard
+form for an historical person’s name related closely to conventions already
+used by Roman Republic scholars to identify individuals.  This "standard naming convention" for DPRR persons required the
+putting together of data mainly from fields in DPRR's person table, but also
+from several other tables. The d2rq mapping language is quite flexible, so <i>perhaps</i>
+this could have been expressed there so that d2rq would have been able to create this name directly,
+but the process to build the name from DPRR data was complex enough that with my rather basic
+understanding of d2rq’s mapping language I couldn’t see how get it to work. Nonetheless, it seemed
+important that DPRR's names for persons be represented in the DPRR RDF, even if I couldn't see how
+to create them with the d2rq mapping language.</li>
+
+<li>Many fields in the DPRR database are empty.  D2RQ claims that it
+provides a mechanism to have empty fields suppressed as RDF data, but I
+couldn’t make it work.  I wanted all statements that had null or empty string
+objects to be suppressed.</li>
+
+<li>Several fields in DPRR were Boolean and reflected particular characteristics
+of the things to which they were attached.  I wanted all situations where the
+value for these properties were false to be suppressed. (this may turn out to
+be a controversial decision)</li>
+
+<li>The handling of the situation where a DPRR had two praenomens to
+associate with a person was handled in a way that did not really suit RDF
+principles, and had to be expressed differently.</li>
+</ul>
+
+<p>All these refinements on the
+dumped data from d2rq could have been perhaps handled directly within <i>d2rq</i>,
+resulting in a file that could be simply directly loaded into the DPRR RDF
+server.  However, I chose, instead, to write a python script (called
+<code>processttl.py</code>) that took the version of RDF data that dump-rdf had generated and made all the
+changes outlined above, creating a new turtle file called <code>dppr_clean.ttl</code>.  It
+was this file that was to be loaded into the DPRR RDF server.</p>
+
+<h3 id="buildserver">Building the DPRR RDF server</h3>
+
+<p>Now that we had a way to generate the RDF triples from the DPRR relational database, we needed a way to
+serve them.</p>
+
+<p>A number of different software development projects
+worldwide have created toolkits for RDF servers.  I chose <a href="http://rdf4j.org/">rdf4j</a> as the platform for building
+DPRR’s particular RDF server, since rdfj4 was a Java-based platform that included
+many components I knew we were going to need to make DPRR’s server work in the
+way I wanted.  In particular, I liked the part of <i>rdf4j</i> called the <i>workbench</i> which
+operated as a Tomcat web application and that out of the various
+platforms I looked at seemed to me to best provide access to the RDF data in ways that
+assisted the user to grasp how the data was structured.</p>
+
+<p>There was, however, an issue with
+the <i>rdf4j workbench</i> as it came "out of the box": the workbench provided a full set of tools not only to
+interact with existing RDF data but to change it too &#x2014; including allowing its user to replace or remove some or
+all the RDF triples in its repository.  Furthermore, the administrative system
+to manage permissions for data users in such a way that the DPRR data
+administrator would be able to update the data while ordinary users could not, was
+not sufficiently clearly laid out so that I was confident that I could readily
+control this.</p>
+
+<p>So, I decided to use the <i>rdf4j workbench</i>
+code as the basis for DPRR’s RDF server but to make several changes
+to the way that it operates “out of the box”. As a result:</p>
+
+<ul>
+<li>All features of the <i>rdf4j workbench</i> that went beyond data
+exploring have been removed, including the Java classes that implement these
+features.</li>
+
+<li>The <i>rdf4j workbench</i> in the DPRR server has been directed to
+work directly with RDF data in the filesystem, rather than through an
+intermediate rdf4j server (which, by operating via http:, presented similar
+issues of data access and control that the raw workbench did).</li>
+
+<li>Minor changes to the look and feel, beyond the removing of
+unwanted features, have been made.  The web pages “livery” is now related to DPRR’s
+livery, etc etc.</li>
+
+<li>A few classes have been developed by me to provide the data-oriented
+support for URI entities, and for a direct data-oriented (rather than HTML
+mediated) SPARQL endpoint. These classes that go outside the functionality
+provided by the rdf4j workbench are in the JAVA package <code>uk.ac.kcl.ddh.jb.rdf.server</code>.</li>
+</ul>
+
+<p>All this work was done by setting
+up the <i>rdf4j workbench</i> code in Eclipse via an Eclipse “web” project, and
+working on it there.  The changes were relatively minor.  The base Java code
+that came from rdf4j for the workbench classes was altered in a few trivial ways.
+In addition, to provide the
+data-oriented services (support for entity URIs, and the basic SPARQL endpoint:
+the features mentioned in the last point above) I had to add a small number of my own
+classes.  Of course, the various “web content pages” had to be altered too to
+bring in elements of DPRR’s livery, and to remove references to services that
+the out-of-the-box <i>rdf4j workbench</i> offered but that were not to be made
+available in the DPRR’s RDF server.</p>
+
+<p>This work on the web content
+pages revealed what was, to me, something interesting: the <i>rdf4j workbench</i>
+operates in an unusual way as a server of pages for a web browser in that it actually makes use of
+browsers that support XML and XSLT &#x2014; sending XML that
+it generates as the data, with a reference to an XSLT stylesheet that, on the
+browser, gets transforms into HTML for proper display. Thus, one of the
+jobs I needed to do was alter the stylesheets (particularly the “template.xsl”,
+but others too) to remove all HTML links to services that the DPRR RDF server
+was not going to offer. In addition, unwanted functionality was removed, and
+new functionality added, to the WEB-INF/web.xml file.</p>
+
+<p>The entire Eclipse project in which DPRR's RDF server is licenced as open source through the EPL license for the Java code, and Creative
+Commons for the non-Java elements.  In addition, it is available
+for anyone to use through a github repository at <i>johnBradley501/uk.ac.kcl.cch.dprr.rdf.server</i></p>
+
+<p>Having now created mechanisms to
+generate the RDF data, and having built an RDF server based on the stripped
+down (and somewhat extended) <i>rdf4j workbench</i>, I was ready to turn my attention
+to an ontology for DPRR.</p>
+
+<h3 id="buildont">Building the DPRR ontology</h3>
+
+<p>I chose to use rdf4j’s memory
+repository that supported RDF Schema inferencing (according to rdf4j
+documentation at (<a
+href="http://docs.rdf4j.org/javadoc/2.0/org/eclipse/rdf4j/sail/inferencer/fc/ForwardChainingRDFSInferencer.html">http://docs.rdf4j.org/javadoc/2.0/org/eclipse/rdf4j/sail/inferencer/fc/ForwardChainingRDFSInferencer.html</a>)
+it follows the rules from the RDF Semantics Recommendations (<a
+href="https://www.w3.org/TR/2004/REC-rdf-mt-20040210/#rdfs_interp">https://www.w3.org/TR/2004/REC-rdf-mt-20040210/#rdfs_interp</a>). 
+Furthermore, in my view information about data in terms of a class-subclass
+structure makes it easier for a human to grasp.  These two reasons, then, meant
+that it was worthwhile constructing the DPRR Ontology in ways that made use of
+class-subclass structuring mechanisms.  D2RQ, which generates DPRR's RDF statements, does not provide direct support
+for a subclassing model, in part because the ideas in subclassing are
+available, if at all, only implicitly in relational database semantics. Thus,
+the class-subclass structure that is presented in DPRR’s ontology had to be
+constructed by me entirely “by hand”. D2RQ is not aware of this class hierarchy
+at all.</p>
+
+<p>I chose to express the ontology
+in terms of the OWL language (<a href="https://www.w3.org/OWL/">https://www.w3.org/OWL/</a>), although I only used a
+few basic constructs of OWL.  You can find the DPRR ontology at:</p>
+
+<p><a href="http://romanrepublic.ac.uk/rdf/ontology#">http://romanrepublic.ac.uk/rdf/ontology#</a></p>
+
+<p>A certain amount of the material
+(base classes and properties) in the DPRR ontology could be generated
+automatically from the information D2RQ has in its mapping file.  Thus, I
+loaded the DPRR mapping file, which is in RDF, into a temporary RDF store using
+rdf4j’s workbench, and ran SPARQL construct queries against it to create
+preliminary components of what was going to become the DPRR ontology.  The
+following query, for example, created class definitions for all of d2rq’s
+ClassMap constructs:</p>
+
+<pre class="w3-border w3-padding">
+PREFIX owl: http://www.w3.org/2002/07/owl#
+PREFIX rdfs: http://www.w3.org/2000/01/rdf-schema#
+PREFIX d2rq: http://www.wiwiss.fu-berlin.de/suhl/bizer/D2RQ/0.1#
+PREFIX vocab: http://romanrepublic.ac.uk/rdf/vocab/
+
+construct {?name a owl:Class;
+   rdfs:label ?label.
+}
+where {
+   ?a a d2rq:ClassMap;
+   d2rq:class ?name;
+   d2rq:classDefinitionLabel ?label;
+}
+</pre>
+
+<p>This query created a <i>rdf:Property</i>
+assertion and domain mapping for all <i>d2rq:PropertyBridge</i> assertions:</p>
+
+<pre class="w3-border w3-padding">
+construct {
+   ?name a rdf:Property ;
+      rdfs:domain ?domainName.
+}
+where {
+   ?a a d2rq:PropertyBridge;
+           d2rq:belongsToClassMap ?domainMap;
+           d2rq:property ?name.
+    ?domainMap d2rq:class ?domainName.
+    filter (?name != rdfs:label)
+}
+</pre>
+
+<p>A final example (there were
+several more similar to this), created <i>rdfs:range</i> assertions for properties
+that were to become OWL ObjectProperties:</p>
+
+<pre class="w3-border w3-padding">
+>construct {
+   ?name rdfs:range ?rangeName.
+}
+where {
+   ?a a d2rq:PropertyBridge;
+  d2rq:property ?name;
+  d2rq:refersToClassMap ?rangeMap.
+    ?rangeMap d2rq:class ?rangeName.
+}
+</pre>
+
+<p>After running my 5 <code>construct</code>
+queries, I combined all the triple results they generated into one large file by hand, added a
+basic <i>owl:Ontology</i> definition, and opened the resulting file in <i>Protégé</i>
+(<a href="http://protege.stanford.edu/">http://protege.stanford.edu/</a>).</p>
+
+<p>There was then a fair amount of
+work by hand in <i>Protégé</i> to further enrich the ontology to the state that you
+see it now &#x2014; in particular adding what appeared to me to be an appropriate
+class-subclass structure, and adding at least a brief <i>rdfs:comment</i> field
+to each class and property.</p>
+
+<p>Once I had an owl file containing
+the DPRR ontology, a reasonably readable set of documentation files for the DPRR
+ontology could be generated using <i>Protégé</i>’s OWLDoc plugin, and then modified
+slightly with a small Python file to fix up a few awkward bits in OWLDoc’s
+generated HTML.  You can see the result at:</p>
+
+<p><a href="../ontology/doc">http://romanrepublic.ac.uk/rdf/ontology/doc</a></p>
+
+    </div>
+  </div>
+</body>
+  <footer id="myFooter">
+    <div class="w3-container w3-theme-l2 w3-padding-32">
+      <p><b>Copyright 2017 John Bradley, King's College London</b></p>
+	  <p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+    </div>
+
+    <div class="w3-container w3-theme-l1">
+      <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </div>
+  </footer>
+
+<!-- END MAIN -->
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+buildSidebar();
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidebar.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+}
+
+function dummy(){
+   window.alert("dummy");
+}
+</script>
+
+
+</body></html>
