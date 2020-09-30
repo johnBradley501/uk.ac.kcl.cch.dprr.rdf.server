@@ -1,11 +1,12 @@
 # This Python script demonstrates how to use DPRR RDF server to fetch data tailored to a particular query
 # and transform this data into an HTML display page (here, using Google Graphs tools)
-#                ... John Bradley DDH/KDL    June 2017
+#                ... John Bradley DDH/KDL    June 2017, revised for Python 3 June 2020
 
-import urllib2
+import urllib.parse
+import urllib.request
 import json
 
-path = "research/dprr/timeline/"
+path = "/research/dprr/timeline/"
 fileName = "consuls.html"
 urlBase = "http://romanrepublic.ac.uk/rdf/endpoint"
 uriBase = "http://romanrepublic.ac.uk/rdf/entity/"
@@ -25,18 +26,19 @@ where {
   ?postAssert a vocab:PostAssertion;
     vocab:hasID ?aid;
     vocab:isAboutPerson ?person;
-    vocab:hasOffice <http://www.romanrepublic.ac.uk/rdf/entity/Office/3>;
+    vocab:hasOffice <http://romanrepublic.ac.uk/rdf/entity/Office/3>;
     vocab:hasDateStart ?startDate;
     vocab:hasDateEnd ?endDate.
   ?tribe a vocab:Tribe;
     vocab:hasName ?tname.
 }"""
-    url = urlBase+"?query="+urllib2.quote(query.strip())
-    req = urllib2.Request(url)
-    req.add_header('Accept', "application/json")
-    conn = urllib2.urlopen(req)
-    rslt = json.loads(conn.read())
-    conn.close()
+    values = {"query": query}
+    myheaders = {"Accept": "application/json"}
+    data = urllib.parse.urlencode(values)
+    
+    req = urllib.request.Request(urlBase+"?"+data, headers=myheaders)
+    response = urllib.request.urlopen(req)
+    rslt = json.loads(response.read())
     return rslt
 
 def genBoringBit1(out):
@@ -60,7 +62,7 @@ def genBoringBit1(out):
 
       data.addRows([
 """
-    print >>out, prefix
+    out.write(prefix)
 
 def genBoringBit2(out):
     postfix = """
@@ -90,7 +92,7 @@ def genBoringBit2(out):
   </body>
 </html>
     """
-    print >>out,postfix
+    out.write(postfix)
 
 def buildLabel(sdate, pid, aid, pname):
     rslt = '<b>Year</b>: '+str(-sdate)+' BCE<br />'
@@ -110,7 +112,7 @@ def genInterestingBit(out, data):
         pid = int(binding["pid"]["value"])
         aid = int(binding["aid"]["value"])
         pname = binding["pname"]["value"]
-        print >>out, "   ['"+tname+"',\t'','"+buildLabel(sdate, pid, aid, pname)+"', new Date("+str(sdate)+",0,1), new Date("+str(edate)+",0,1)],"
+        out.write("   ['"+tname+"',\t'','"+buildLabel(sdate, pid, aid, pname)+"', new Date("+str(sdate)+",0,1), new Date("+str(edate)+",0,1)],\n")
 
 out = open(path+fileName,"w")
 genBoringBit1(out);
